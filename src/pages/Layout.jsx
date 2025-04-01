@@ -1,17 +1,12 @@
 import React from 'react';
-import './Layout.css';
 import { Outlet } from 'react-router-dom';
+import Header from '../components/client/Header';
 
 const Layout = () => {
   return (
     <div className="layout">
-      <header className="header">
-        <nav>
-          <h1>E-Commerce Store</h1>
-          {/* Add navigation items here */}
-        </nav>
-      </header>
-      
+      <Header />
+
       <main className="main-content">
         <Outlet />
       </main>
