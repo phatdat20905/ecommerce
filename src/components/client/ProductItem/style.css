@@ -1,0 +1,19 @@
+.productItem .title {
+    line-height: 18px;
+}
+
+.btn-org.btn-border {
+    background: none !important;
+    color: #ff5252 !important;
+    border: 1px solid #ff5252 !important;
+    font-weight: 500;
+    font-size: 12px;
+    padding: 7px 20px !important;
+}
+
+.btn-org.addToCartBtn:hover{background-color: black !important; color: white !important; border: none !important;}
+
+.lazy-load-image-background.blur.lazy-load-image-loaded {
+    filter: blur(0);
+    transition: filter .3s;
+}
