@@ -17,8 +17,8 @@ body {
 }
 
 ::-webkit-scrollbar{width: 8px !important; height: 8px !important;}
-::-webkit-scrollbar-thumb {background-color: #ccc;}
-::-webkit-scrollbar-track {background-color: #fff;}
+::-webkit-scrollbar-thumb {background-color: #ff5252;}
+::-webkit-scrollbar-track {background-color: #ccc;}
 
 .container {
   width: 95%;
@@ -115,3 +115,18 @@ nav ul button{text-transform: capitalize !important;}
 }
 
 .MuiTab-textColorPrimary.Mui-selected{color: #ff5252 !important;}
+
+.swiper-pagination-bullet-active {
+  background-color: #ff5252 !important;
+}
+
+.homeSliderV2 .swiper-slide-active .info{right: 0px !important; opacity: 1;}
+.homeSliderV2 .swiper-slide-active .info h4{right: 0px !important; opacity: 1;}
+.homeSliderV2 .swiper-slide-active .info h3{right: 0px !important; opacity: 1;}
+.homeSliderV2 .swiper-slide-active .info h2{right: 0px !important; opacity: 1;}
+.homeSliderV2 .swiper-slide-active .info .btn_{right: 0px !important; opacity: 1;}
+
+.homeSliderV2 .info h4{transition-duration: 1.2s;}
+.homeSliderV2 .info h2{transition-duration: 1.5s;}
+.homeSliderV2 .info h3{transition-duration: 1.8s;}
+.homeSliderV2 .info .btn_{transition-duration: 2.1s;}

@@ -30,7 +30,7 @@ const ProductItem = () => {
                     </Button>
                 </div>
             </div>
-            <div className='info p-3 py-5 relative pb-[50px] h-[190px]'>
+            <div className='info p-3 py-5 relative pb-[50px] h-[190px] text-left'>
                 <h6 className="text-[13px] !font-[400]"><span className="link transition-all">Apple</span></h6>
                 <h3 className="text-[12px] lg:text-[13px] title mt-1 font-[500] mb-1 text-[#000]">
                     <a className="link transition-all" href="/product/67dba11d6e949cc6cd6546a1" data-discover="true">Apple iPhone 13 (Blue, 12...</a>

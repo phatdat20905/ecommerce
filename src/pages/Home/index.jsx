@@ -16,6 +16,8 @@ import 'swiper/css/pagination';
 // import required modules
 import { Navigation } from 'swiper/modules';
 import BlogItem from "../../components/client/BlogItem";
+import HomeSliderV2 from "../../components/client/HomeSliderV2";
+import BannerBoxV2 from "../../components/client/BannerBoxV2";
 const Home = () => {
     const [value, setValue] = React.useState(0);
 
@@ -55,6 +57,17 @@ const Home = () => {
                     </div>
                     <div className="min-h-max lg:min-h-[60vh]">
                         <ProductsSlider items={6} />
+                    </div>
+                </div>
+            </section>
+            <section className="py-6 pt-0 bg-white">
+                <div className="container flex flex-col lg:flex-row gap-5">
+                    <div className="part1 w-full lg:w-[70%]">
+                        <HomeSliderV2 />
+                    </div>
+                    <div className="part2 scrollableBox w-full lg:w-[30%] flex items-center gap-5 justify-between flex-row lg:flex-col">
+                        <BannerBoxV2 info="right" image={"https://serviceapi.spicezgold.com/download/1741664665391_1741497254110_New_Project_50.jpg"} />
+                        <BannerBoxV2 info="left" image={"https://serviceapi.spicezgold.com/download/1741664496923_1737020250515_New_Project_47.jpg"} />
                     </div>
                 </div>
             </section>
