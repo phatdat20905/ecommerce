@@ -11,13 +11,14 @@ import ProductManagement from "./pages/admin/ProductManagement";
 import OrderManagement from "./pages/admin/OrderManagement";
 import BrandManagement from "./pages/admin/BrandManagement";
 import RoleManagement from "./pages/admin/RoleManagement";
+import Home from "./pages/Home";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={<HomePage />} />
+          <Route index element={<Home />} />
           {/* <Route path="/about" element={<AboutPage />} /> */}
           <Route path="/product" element={<Products />} />
           <Route path="/cart" element={<Cart />} />
@@ -32,7 +33,7 @@ function App() {
         </Route>
       </Routes>
     </BrowserRouter>
-    
+
   );
 }
 
