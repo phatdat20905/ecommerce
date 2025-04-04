@@ -32,9 +32,21 @@ p {
   margin: auto;
 }
 
-header .top-strip{
+.btn-org {
+  background: #ff5252 !important;
+  color: #fff !important;
+  font-weight: 500;
+  font-size: 16px;
+  padding: 7px 20px !important;
+  border: 1px solid transparent !important;
 }
 
+.btn-org:hover{
+  background: black !important;
+  color: #fff !important;
+}
+
+.btn-lg{font-size: 18px; padding: 10px 20px !important;}
 
 .link:hover{color: #ff5252;}
 

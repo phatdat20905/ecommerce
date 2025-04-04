@@ -1,16 +1,4 @@
-.btn-org {
-    background: #ff5252 !important;
-    color: #fff !important;
-    font-weight: 500;
-    font-size: 16px;
-    padding: 7px 20px !important;
-    border: 1px solid transparent !important;
-}
 
-.btn-org:hover{
-    background: black !important;
-    color: #fff !important;
-}
 
 footer form input::placeholder{font-size: 14px;}
 

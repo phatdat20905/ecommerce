@@ -21,6 +21,8 @@ import DialogContent from '@mui/material/DialogContent';
 import ProductZoom from "./components/client/ProductZoom";
 import { IoCloseSharp } from "react-icons/io5";
 import ProductDetailsComponent from "./components/client/ProductDetailsComponent";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 const MyContext = createContext();
 
@@ -46,6 +48,8 @@ function App() {
               <Route index element={<Home />} />
               <Route path="productlisting" element={<ProductListing />} />
               <Route path="product/:id" element={<ProductDetails />} />
+              <Route path="login" element={<Login />} />
+              <Route path="register" element={<Register />} />
               {/* <Route path="/about" element={<AboutPage />} /> */}
               <Route path="/product" element={<Products />} />
               <Route path="/cart" element={<Cart />} />
