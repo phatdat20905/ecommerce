@@ -14,6 +14,8 @@ import RoleManagement from "./pages/admin/RoleManagement";
 import Home from "./pages/Home";
 import ProductListing from "./pages/ProductListing";
 import ProductDetails from "./pages/ProductDetails";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -21,22 +23,31 @@ import DialogContent from '@mui/material/DialogContent';
 import ProductZoom from "./components/client/ProductZoom";
 import { IoCloseSharp } from "react-icons/io5";
 import ProductDetailsComponent from "./components/client/ProductDetailsComponent";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
+
+
 
 const MyContext = createContext();
 
 function App() {
+
   const [openProductDetailsModal, setOpenProductDetailsModal] = useState(false);
   const [fullWidth, setFullWidth] = useState(true);
   const [maxWidth, setMaxWidth] = useState('lg');
 
+  const [openCartPanel, setOpenCartPanel] = useState(false);
+
+  const toggleCartPanel = (newOpen) => () => {
+    setOpenCartPanel(newOpen);
+  };
   const handleCloseProductDetailsModal = () => {
     setOpenProductDetailsModal(false);
   };
 
   const values = {
-    setOpenProductDetailsModal
+    setOpenProductDetailsModal,
+    setOpenCartPanel,
+    openCartPanel,
+    toggleCartPanel,
   }
 
   return (
@@ -87,6 +98,8 @@ function App() {
           </div>
         </DialogContent>
       </Dialog>
+
+
     </>
   );
 }
