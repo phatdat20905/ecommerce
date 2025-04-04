@@ -36,28 +36,28 @@ const ProductZoom = () => {
                         <div className={`item rounded-md overflow-hidden h-[80px] cursor-pointer group h-[100%] ${slideIndex === 0 ? 'opacity-1' : 'opacity-30'}`}
                             onClick={() => GoTools(0)}
                         >
-                            <img src="https://serviceapi.spicezgold.com/download/1742463096955_hbhb1.jpg" className="w-full" />
+                            <img src="https://serviceapi.spicezgold.com/download/1742463096955_hbhb1.jpg" />
                         </div>
                     </SwiperSlide>
                     <SwiperSlide>
                         <div className={`item rounded-md overflow-hidden h-[80px] cursor-pointer group h-[100%] ${slideIndex === 1 ? 'opacity-1' : 'opacity-30'}`}
                             onClick={() => GoTools(1)}
                         >
-                            <img src="https://serviceapi.spicezgold.com/download/1742463096956_hbhb2.jpg" className="w-full" />
+                            <img src="https://serviceapi.spicezgold.com/download/1742463096956_hbhb2.jpg" />
                         </div>
                     </SwiperSlide>
                     <SwiperSlide>
-                        <div className={`item rounded-md overflow-hidden h-[80px] cursor-pointer group h-[100%] ${slideIndex === 2 ? 'opacity-1' : 'opacity-30'}`}
+                        <div className={`item rounded-md overflow-hidden h-[80px] cursor-pointer group h-[100%]  ${slideIndex === 2 ? 'opacity-1' : 'opacity-30'}`}
                             onClick={() => GoTools(2)}
                         >
-                            <img src="https://serviceapi.spicezgold.com/download/1742463096960_hbhb3.jpg" className="w-full" />
+                            <img src="https://serviceapi.spicezgold.com/download/1742463096960_hbhb3.jpg" />
                         </div>
                     </SwiperSlide>
                     <SwiperSlide>
                         <div className={`item rounded-md overflow-hidden h-[80px] cursor-pointer group h-[100%] ${slideIndex === 3 ? 'opacity-1' : 'opacity-30'}`}
                             onClick={() => GoTools(3)}
                         >
-                            <img src="https://serviceapi.spicezgold.com/download/1742463096961_hbhb4.jpg" className="w-full" />
+                            <img src="https://serviceapi.spicezgold.com/download/1742463096961_hbhb4.jpg" />
                         </div>
                     </SwiperSlide>
                     {/* <SwiperSlide>

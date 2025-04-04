@@ -11,7 +11,7 @@ import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import "./style.css";
 const ProductListing = () => {
-    const [itemView, setIsItemView] = useState('grid');
+    const [itemView, setIsItemView] = useState('list');
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
