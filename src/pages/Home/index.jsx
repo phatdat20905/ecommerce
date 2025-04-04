@@ -18,6 +18,7 @@ import { Navigation } from 'swiper/modules';
 import BlogItem from "../../components/client/BlogItem";
 import HomeSliderV2 from "../../components/client/HomeSliderV2";
 import BannerBoxV2 from "../../components/client/BannerBoxV2";
+import AdsBannerSliderV2 from "../../components/client/AdsBannerSilderV2";
 const Home = () => {
     const [value, setValue] = React.useState(0);
 
@@ -84,7 +85,7 @@ const Home = () => {
                         </div>
                         <p className="font-bold text-[20px] lg:text-[25px]">- Only $200*</p>
                     </div>
-                    <AdsBannerSlider items={4} />
+                    <AdsBannerSliderV2 items={4} />
                 </div>
 
 

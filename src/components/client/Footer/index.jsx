@@ -1,7 +1,7 @@
 import React from 'react';
-import { LiaShippingFastSolid } from 'react-icons/lia';
+import { LiaGiftSolid, LiaShippingFastSolid } from 'react-icons/lia';
 import { Link } from 'react-router-dom';
-import { BiMessage } from "react-icons/bi";
+import { BiMessage, BiSupport } from "react-icons/bi";
 import Button from '@mui/material/Button';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -9,6 +9,8 @@ import Checkbox from '@mui/material/Checkbox';
 import './style.css';
 import { FaFacebookF, FaInstagram, FaPinterestP } from 'react-icons/fa';
 import { AiOutlineYoutube } from 'react-icons/ai';
+import { PiKeyReturnLight } from 'react-icons/pi';
+import { BsWallet2 } from 'react-icons/bs';
 
 const Footer = () => {
     return (
@@ -22,24 +24,24 @@ const Footer = () => {
                             <p className="text-[12px] font-[500]">For all Orders Over $100</p>
                         </div>
                         <div className='col flex items-center justify-center flex-col group w-[15%]'>
-                            <LiaShippingFastSolid className='text-[40px] transition-all duration-300 group-hover:text-primary group-hover:-translate-y-1' />
-                            <h3 className="text-[16px] font-[600] mt-3">Free Shipping</h3>
-                            <p className="text-[12px] font-[500]">For all Orders Over $100</p>
+                            <PiKeyReturnLight className='text-[40px] transition-all duration-300 group-hover:text-primary group-hover:-translate-y-1' />
+                            <h3 className="text-[16px] font-[600] mt-3">30 Days Returns</h3>
+                            <p className="text-[12px] font-[500]">For an Exchange Product</p>
                         </div>
                         <div className='col flex items-center justify-center flex-col group w-[15%]'>
-                            <LiaShippingFastSolid className='text-[40px] transition-all duration-300 group-hover:text-primary group-hover:-translate-y-1' />
+                            <BsWallet2 className='text-[40px] transition-all duration-300 group-hover:text-primary group-hover:-translate-y-1' />
                             <h3 className="text-[16px] font-[600] mt-3">Free Shipping</h3>
-                            <p className="text-[12px] font-[500]">For all Orders Over $100</p>
+                            <p className="text-[12px] font-[500]">Payment Cards Accepted</p>
                         </div>
                         <div className='col flex items-center justify-center flex-col group w-[15%]'>
-                            <LiaShippingFastSolid className='text-[40px] transition-all duration-300 group-hover:text-primary group-hover:-translate-y-1' />
-                            <h3 className="text-[16px] font-[600] mt-3">Free Shipping</h3>
-                            <p className="text-[12px] font-[500]">For all Orders Over $100</p>
+                            <LiaGiftSolid className='text-[40px] transition-all duration-300 group-hover:text-primary group-hover:-translate-y-1' />
+                            <h3 className="text-[16px] font-[600] mt-3">Special Gifts</h3>
+                            <p className="text-[12px] font-[500]">Our First Product Order</p>
                         </div>
                         <div className='col flex items-center justify-center flex-col group w-[15%]'>
-                            <LiaShippingFastSolid className='text-[40px] transition-all duration-300 group-hover:text-primary group-hover:-translate-y-1' />
-                            <h3 className="text-[16px] font-[600] mt-3">Free Shipping</h3>
-                            <p className="text-[12px] font-[500]">For all Orders Over $100</p>
+                            <BiSupport className='text-[40px] transition-all duration-300 group-hover:text-primary group-hover:-translate-y-1' />
+                            <h3 className="text-[16px] font-[600] mt-3">Support 24/7</h3>
+                            <p className="text-[12px] font-[500]">Contact us Anytime</p>
                         </div>
                     </div>
                     <br />
@@ -47,7 +49,7 @@ const Footer = () => {
                     <div className='footer flex px-3 lg:px-0 flex-col lg:flex-row py-8'>
                         <div className='part1 w-full lg:w-[25%] border-r border-[rgba(0,0,0,0.1)]'>
                             <h2 className="text-[18px] font-[600] mb-4">Contact us</h2>
-                            <p class="text-[13px] font-[400] pb-4">Classyshop - Mega Super Store<br />507-Union Trade Centre France</p>
+                            <p className="text-[13px] font-[400] pb-4">Classyshop - Mega Super Store<br />507-Union Trade Centre France</p>
                             <Link to={"mailto:someone@example.com"} className="link text-[13px]">sales@yourcompany.com</Link>
                             <span className="text-[22px] font-[600] block w-full mt-3 mb-5 text-primary">(+91) 9876-543-210</span>
                             <div className='flex items-center gap-2'>
@@ -142,7 +144,7 @@ const Footer = () => {
 
                     <p className="text-[13px] text-center mb-0">© 2024 - Ecommerce Template</p>
 
-                    <div class="flex items-center gap-1">
+                    <div className="flex items-center gap-1">
                         <img src="/carte_bleue.png" alt="image" />
                         <img src="/visa.png" alt="image" />
                         <img src="/master_card.png" alt="image" />

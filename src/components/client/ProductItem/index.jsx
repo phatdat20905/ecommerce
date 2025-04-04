@@ -35,7 +35,7 @@ const ProductItem = () => {
                 <h3 className="text-[12px] lg:text-[13px] title mt-1 font-[500] mb-1 text-[#000]">
                     <a className="link transition-all" href="/product/67dba11d6e949cc6cd6546a1" data-discover="true">Apple iPhone 13 (Blue, 12...</a>
                 </h3>
-                <span><Rating name="size-small" defaultValue={2} size="small" readOnly /></span>
+                <Rating name="size-small" defaultValue={2} size="small" readOnly />
                 <div className="flex items-center gap-4 justify-between">
                     <span className="oldPrice line-through text-gray-500 text-[12px] lg:text-[14px] font-[500]">₹38,500.00</span>
                     <span className="price text-primary text-[12px] lg:text-[14px]  font-[600]">₹38,650.00</span>

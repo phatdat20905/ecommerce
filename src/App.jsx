@@ -12,6 +12,7 @@ import OrderManagement from "./pages/admin/OrderManagement";
 import BrandManagement from "./pages/admin/BrandManagement";
 import RoleManagement from "./pages/admin/RoleManagement";
 import Home from "./pages/Home";
+import ProductListing from "./pages/ProductListing";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
+          <Route path="productlisting" element={<ProductListing />} />
           {/* <Route path="/about" element={<AboutPage />} /> */}
           <Route path="/product" element={<Products />} />
           <Route path="/cart" element={<Cart />} />
