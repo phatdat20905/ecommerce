@@ -16,7 +16,10 @@ import ProductZoom from "./components/client/ProductZoom";
 import { IoCloseSharp } from "react-icons/io5";
 import ProductDetailsComponent from "./components/client/ProductDetailsComponent";
 import CartPage from "./pages/CartPage";
+import Verify from "./pages/Verify";
 
+import toast, { Toaster } from 'react-hot-toast';
+import ForgotPassword from "./pages/ForgotPassword";
 
 
 const MyContext = createContext();
@@ -54,6 +57,8 @@ function App() {
               <Route path="product/:id" element={<ProductDetails />} />
               <Route path="login" element={<Login />} />
               <Route path="register" element={<Register />} />
+              <Route path="verify" element={<Verify />} />
+              <Route path="forgot-password" element={<ForgotPassword />} />
               <Route path="cart" element={<CartPage />} />
               {/* <Route path="/about" element={<AboutPage />} /> */}
               <Route path="/product" element={<Products />} />
@@ -68,6 +73,45 @@ function App() {
           </Route> */}
           </Routes>
         </MyContext.Provider>
+
+        <Toaster
+          position="top-right"
+          reverseOrder={false}
+          toastOptions={{
+            // Áp dụng cho mọi loại toast
+            duration: 4000,
+            style: {
+              background: '#333',
+              color: '#fff',
+              borderRadius: '8px',
+              padding: '12px 16px',
+            },
+
+            // Cấu hình riêng từng loại
+            success: {
+              icon: '✅',
+              style: {
+                background: '#22c55e',
+                color: 'white',
+              },
+            },
+            error: {
+              icon: '❌',
+              style: {
+                background: '#ef4444',
+                color: 'white',
+              },
+            },
+            loading: {
+              iconTheme: {
+                primary: '#0ea5e9',
+                secondary: '#bae6fd',
+              },
+            },
+          }}
+        />
+
+
       </BrowserRouter>
 
       <Dialog
