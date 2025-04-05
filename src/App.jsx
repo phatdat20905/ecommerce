@@ -1,16 +1,8 @@
 import React, { createContext, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./pages/Layout";
-import HomePage from "./pages/HomePage";
 import Products from "./pages/Product";
-import Cart from "./pages/Cart";
-import AdminLayout from "./layouts/AdminLayout";
-import Dashboard from "./pages/admin/Dashboard";
-import UserManagement from "./pages/admin/UserManagement";
-import ProductManagement from "./pages/admin/ProductManagement";
-import OrderManagement from "./pages/admin/OrderManagement";
-import BrandManagement from "./pages/admin/BrandManagement";
-import RoleManagement from "./pages/admin/RoleManagement";
+// import Cart from "./pages/Cart";
 import Home from "./pages/Home";
 import ProductListing from "./pages/ProductListing";
 import ProductDetails from "./pages/ProductDetails";
@@ -23,6 +15,7 @@ import DialogContent from '@mui/material/DialogContent';
 import ProductZoom from "./components/client/ProductZoom";
 import { IoCloseSharp } from "react-icons/io5";
 import ProductDetailsComponent from "./components/client/ProductDetailsComponent";
+import CartPage from "./pages/CartPage";
 
 
 
@@ -61,9 +54,9 @@ function App() {
               <Route path="product/:id" element={<ProductDetails />} />
               <Route path="login" element={<Login />} />
               <Route path="register" element={<Register />} />
+              <Route path="cart" element={<CartPage />} />
               {/* <Route path="/about" element={<AboutPage />} /> */}
               <Route path="/product" element={<Products />} />
-              <Route path="/cart" element={<Cart />} />
             </Route>
             {/* <Route path="/admin" element={<AdminLayout />}>
             <Route index element={<Dashboard />} />
