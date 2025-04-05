@@ -69,7 +69,7 @@ const Header = () => {
                             <img src="/logo.jpg" className="max-w-[140px] lg:max-w-[200px]" />
                         </Link>
                     </div>
-                    <div className="col2 fixed top-0 left-0 w-full h-full lg:w-[40%] lg:static p-2 lg:p-0 bg-white z-50 !block hidden">
+                    <div className="col2 w-[45%]">
                         <Search />
                     </div>
                     <div className="col3 w-[10%] lg:w-[30%] flex items-center pl-7">
