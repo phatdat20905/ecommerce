@@ -2,14 +2,23 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import Search from "../Search";
 import Badge from '@mui/material/Badge';
+import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import { MdOutlineShoppingCart } from "react-icons/md";
-import { IoGitCompare } from "react-icons/io5";
+import { IoBagCheckOutline, IoGitCompare } from "react-icons/io5";
 import { FaRegHeart } from "react-icons/fa6";
 import Navigation from "./Navigation";
 import { MyContext } from "../../../App";
+import { FaRegUser } from "react-icons/fa";
+import { CiLocationOn } from "react-icons/ci";
+
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import Divider from '@mui/material/Divider';
+import { IoIosLogOut, IoMdHeartEmpty } from "react-icons/io";
+
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
     '& .MuiBadge-badge': {
@@ -22,6 +31,15 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 
 const Header = () => {
     const context = useContext(MyContext);
+
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const open = Boolean(anchorEl);
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
     return (
         <header className="bg-white fixed lg:sticky left-0 w-full top-0 lg:-top-[47px] z-[101]">
             <div className="top-strip hidden lg:block py-2 border-t-[1px] border-gray-250  border-b-[1px]">
@@ -47,18 +65,101 @@ const Header = () => {
             <div className="header py-2 lg:py-4 border-b-[1px] border-gray-250">
                 <div className="container flex items-center justify-between">
                     <div className="col1 w-[40%] lg:w-[25%]">
-                        <Link to='/'><img src="/logo.jpg" /></Link>
+                        <Link to='/'>
+                            <img src="/logo.jpg" className="max-w-[140px] lg:max-w-[200px]" />
+                        </Link>
                     </div>
-                    <div className="col2 w-[45%]">
+                    <div className="col2 fixed top-0 left-0 w-full h-full lg:w-[40%] lg:static p-2 lg:p-0 bg-white z-50 !block hidden">
                         <Search />
                     </div>
-                    <div className="col3 w-[30% flex items-center">
+                    <div className="col3 w-[10%] lg:w-[30%] flex items-center pl-7">
                         <ul className="flex items-center justify-end gap-0 lg:gap-3 w-full">
-                            <li className="list-none">
-                                <Link className="link transition text-[15px] font-[500]" to="/login" data-discover="true">Login</Link> | &nbsp;
-                                <Link className="link transition text-[15px]  font-[500]" to="/register" data-discover="true">Register</Link>
-                            </li>
-                            <li className="list-none">
+                            {
+                                context.isLogin === false ?
+                                    (<li className="list-none">
+                                        <Link className="link transition text-[15px] font-[500]" to="/login" data-discover="true">Login</Link> | &nbsp;
+                                        <Link className="link transition text-[15px]  font-[500]" to="/register" data-discover="true">Register</Link>
+                                    </li>)
+                                    :
+                                    (
+                                        <>
+                                            <li>
+                                                <Button
+                                                    onClick={handleClick}
+                                                    className="!text-[#000] myAccountWrap flex items-center gap-3 cursor-pointer">
+                                                    <Button className="!w-[40px] !h-[40px] !min-w-[40px] !rounded-full !bg-gray-200">
+                                                        <FaRegUser className="text-[17px] text-[rgba(0,0,0,0.7)]" />
+                                                    </Button>
+                                                    <div class="info flex flex-col">
+
+                                                        <h4 class="leading-3 text-[14px] text-[rgba(0,0,0,0.6)] font-[500] mb-0 capitalize text-left justify-start">idol tiktok</h4>
+                                                        <span class="text-[13px] text-[rgba(0,0,0,0.6)]  font-[400] capitalize text-left justify-start">tiktokidol800@gmail.com</span>
+                                                    </div>
+                                                </Button>
+                                            </li>
+                                            <Menu
+                                                anchorEl={anchorEl}
+                                                id="account-menu"
+                                                open={open}
+                                                onClose={handleClose}
+                                                onClick={handleClose}
+                                                slotProps={{
+                                                    paper: {
+                                                        elevation: 0,
+                                                        sx: {
+                                                            overflow: 'visible',
+                                                            filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+                                                            mt: 1.5,
+                                                            '& .MuiAvatar-root': {
+                                                                width: 32,
+                                                                height: 32,
+                                                                ml: -0.5,
+                                                                mr: 1,
+                                                            },
+                                                            '&::before': {
+                                                                content: '""',
+                                                                display: 'block',
+                                                                position: 'absolute',
+                                                                top: 0,
+                                                                right: 14,
+                                                                width: 10,
+                                                                height: 10,
+                                                                bgcolor: 'background.paper',
+                                                                transform: 'translateY(-50%) rotate(45deg)',
+                                                                zIndex: 0,
+                                                            },
+                                                        },
+                                                    },
+                                                }}
+                                                transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+                                                anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+                                            >
+                                                <Link to='/my-account' className="w-full block">
+                                                    <MenuItem onClick={handleClose} className="flex gap-2 !py-2">
+                                                        <FaRegUser className="text-[18px]" />  <span className="text-[14px]">My Account</span>
+                                                    </MenuItem>
+                                                </Link>
+                                                <Link to="/" className="w-full block">
+                                                    <MenuItem onClick={handleClose} className="flex gap-2 !py-2">
+                                                        <CiLocationOn className="text-[18px]" />  <span className="text-[14px]">Address</span>
+                                                    </MenuItem>
+                                                </Link>
+                                                <Link to="/" className="w-full block">
+                                                    <MenuItem onClick={handleClose} className="flex gap-2 !py-2">
+                                                        <IoBagCheckOutline className="text-[18px]" />  <span className="text-[14px]">Orders</span>
+                                                    </MenuItem>
+                                                </Link>
+                                                <Link to="/" className="w-full block">
+                                                    <MenuItem onClick={handleClose} className="flex gap-2 !py-2">
+                                                        <IoIosLogOut className="text-[18px]" />  <span className="text-[14px]">Logout</span>
+                                                    </MenuItem>
+                                                </Link>
+                                            </Menu>
+                                        </>
+                                    )
+                            }
+
+                            {/* <li className="list-none">
                                 <Tooltip title="Compare">
                                     <IconButton aria-label="cart">
                                         <StyledBadge badgeContent={4} color="secondary">
@@ -66,7 +167,7 @@ const Header = () => {
                                         </StyledBadge>
                                     </IconButton>
                                 </Tooltip>
-                            </li>
+                            </li> */}
                             <li className="list-none">
                                 <Tooltip title="Wishlist">
                                     <IconButton aria-label="cart">
@@ -92,7 +193,7 @@ const Header = () => {
             </div>
 
             <Navigation />
-        </header>
+        </header >
     );
 }
 
