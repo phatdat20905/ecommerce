@@ -47,7 +47,7 @@ const CartPage = () => {
                             <span className="text-primary font-bold">₹5,150.00</span>
                         </p>
                         <br />
-                        <Link to="/checkou">
+                        <Link to="/checkout">
                             <Button className='btn-org btn-lg w-full flex gap-2'>
                                 <BsFillBagCheckFill className='text-[20px]' /> CheckOut
                             </Button>

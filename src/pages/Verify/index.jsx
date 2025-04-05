@@ -19,8 +19,8 @@ const Verify = () => {
                         <img src='/verify3.png' width="80" />
                     </div>
                     <h3 className="text-center text-[18px] text-black">Verify OTP</h3>
-                    <p class="text-center mt-0 mb-4">
-                        OTP send to <span class="text-primary font-bold">tiktokidol800@gmail.com</span>
+                    <p className="text-center mt-0 mb-4">
+                        OTP send to <span className="text-primary font-bold">tiktokidol800@gmail.com</span>
                     </p>
                     <form onSubmit={VerifyOTP}>
                         <OTPInput length={6} onChange={handleOtpChange} />
