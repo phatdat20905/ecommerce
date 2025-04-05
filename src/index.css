@@ -51,6 +51,7 @@ p {
 }
 
 .btn-lg{font-size: 18px; padding: 10px 20px !important;}
+.btn-sm{font-size: 12px !important; padding: 5px 20px !important;}
 
 .link:hover{color: #ff5252;}
 
