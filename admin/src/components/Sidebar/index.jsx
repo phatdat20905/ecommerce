@@ -78,7 +78,7 @@ const SideBar = () => {
                         <Collapse isOpened={submenuIndex === 2 ? true : false}>
                             <ul className="w-full">
                                 <li className="w-full">
-                                    <Link to={"/"}>
+                                    <Link to={"/categoies"}>
                                         <Button className="!text-[rgba(0,0,0,0.7)] !capitalize !justify-start !w-full !text-[13px] !font-[500] !pl-9 flex gap-3">
                                             <span className="block w-[5px] h-[5px] rounded-full bg-[rgba(0,0,0,0.2)]"></span>
                                             Category List
@@ -86,7 +86,7 @@ const SideBar = () => {
                                     </Link>
                                 </li>
                                 <li className="w-full">
-                                    <Link to={"/"}>
+                                    <Link to={"/category/add"}>
                                         <Button className="!text-[rgba(0,0,0,0.7)] !capitalize !justify-start !w-full !text-[13px] !font-[500] !pl-9 flex gap-3">
                                             <span className="block w-[5px] h-[5px] rounded-full bg-[rgba(0,0,0,0.2)]"></span>
                                             Add A Category
@@ -94,7 +94,7 @@ const SideBar = () => {
                                     </Link>
                                 </li>
                                 <li className="w-full">
-                                    <Link to={"/"}>
+                                    <Link to={"/category/subCat"}>
                                         <Button className="!text-[rgba(0,0,0,0.7)] !capitalize !justify-start !w-full !text-[13px] !font-[500] !pl-9 flex gap-3">
                                             <span className="block w-[5px] h-[5px] rounded-full bg-[rgba(0,0,0,0.2)]"></span>
                                             Sub Category List
@@ -102,7 +102,7 @@ const SideBar = () => {
                                     </Link>
                                 </li>
                                 <li className="w-full">
-                                    <Link to={"/"}>
+                                    <Link to={"/category/subCat/add"}>
                                         <Button className="!text-[rgba(0,0,0,0.7)] !capitalize !justify-start !w-full !text-[13px] !font-[500] !pl-9 flex gap-3">
                                             <span className="block w-[5px] h-[5px] rounded-full bg-[rgba(0,0,0,0.2)]"></span>
                                             Add A Sub Category

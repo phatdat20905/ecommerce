@@ -17,8 +17,10 @@ function App() {
               <div className='overflow-hidden sidebarWrapper w-[20%] transition-all'>
                 <SideBar />
               </div>
+              <div className='contentRight overflow-hidden py-16 px-5 w-[80%]  transition-all'>
+                <Dashboard />
+              </div>
             </div>
-
           </section>
         </>
       )

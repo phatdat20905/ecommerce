@@ -27,10 +27,10 @@ const Header = () => {
         setAnchorMyAcc(null);
     };
     return (
-        <header className="w-full h-[auto] py-2 pl-5 false shadow-md pr-7 bg-[#fff]  flex items-center justify-between transition-all fixed top-0 left-0 z-[50]">
+        <header className="w-full h-[auto] py-2 pl-[22%] shadow-md pr-7 bg-[#fff]  flex items-center justify-between transition-all fixed top-0 left-0 z-[50]">
             <div className="part1 flex items-center gap-4">
                 <Button className="!w-[40px] !h-[40px] !rounded-full !min-w-[40px] !text-[rgba(0,0,0,0.8)]">
-                    <RiMenu2Line />
+                    <RiMenu2Line className="text-[18px] text-[rgba(0,0,0,0.8)]" />
                 </Button>
             </div>
             <div className="part2  flex items-center justify-end gap-5">

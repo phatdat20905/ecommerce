@@ -1,4 +1,4 @@
-body{font-family: "Roboto", sans-serif;}
+body{font-family: "Montserrat", sans-serif;}
 .MuiBadge-badge {
   background: #ff5252 !important;
 }
@@ -6,3 +6,7 @@ body{font-family: "Roboto", sans-serif;}
 .ReactCollapse--collapse {
   transition: height 300ms;
 }
+
+.btn-blue{background-color: #3872fa !important; color: #fff !important; padding: 8px 20px !important;}
+
+.btn-blue:hover{background-color: #0d1e48 !important;}
