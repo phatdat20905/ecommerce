@@ -1,4 +1,4 @@
-body{font-family: "Montserrat", sans-serif;}
+body{font-family: "Montserrat", sans-serif; background-color: #f1f1f1;}
 .MuiBadge-badge {
   background: #ff5252 !important;
 }
@@ -6,7 +6,12 @@ body{font-family: "Montserrat", sans-serif;}
 .ReactCollapse--collapse {
   transition: height 300ms;
 }
+.btn{padding: 8px 20px !important;}
+.btn-sm{padding: 6px 20px !important;}
+
 
 .btn-blue{background-color: #3872fa !important; color: #fff !important; padding: 8px 20px !important;}
 
 .btn-blue:hover{background-color: #0d1e48 !important;}
+
+th.MuiTableCell-root{@apply bg-[#f1f1f1] p-1}
