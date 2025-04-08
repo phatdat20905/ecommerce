@@ -19,6 +19,14 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { IoMdClose } from "react-icons/io";
 import Slide from '@mui/material/Slide';
+import HomeSliderBanners from './pages/HomeSliderBanners';
+import AddHomeSlider from './pages/HomeSliderBanners/addHomeSlide';
+import CategoryList from './pages/Category';
+import AddCategory from './pages/Category/addCategory';
+import SubCategoryList from './pages/Category/subCatList';
+import AddSubCategory from './pages/Category/addSubCategory';
+import Users from './pages/Users';
+import Orders from './pages/Orders';
 
 const MyContext = createContext();
 
@@ -41,12 +49,12 @@ function App() {
       children: [
         { index: true, element: <Dashboard /> },
         { path: "products", element: <Products /> },
+        { path: "homeSlider/list", element: <HomeSliderBanners /> },
+        { path: "category/list", element: <CategoryList /> },
+        { path: "subCategory/list", element: <SubCategoryList /> },
+        { path: "users", element: <Users /> },
+        { path: "orders", element: <Orders /> },
       ]
-    },
-    {
-      path: '/product/upload',
-      exact: true,
-      element: <AddProduct />,
     },
     {
       path: '/login',
@@ -102,6 +110,15 @@ function App() {
         </AppBar>
         {
           isShowFullScreenPanel?.model === "Add Product" && <AddProduct />
+        }
+        {
+          isShowFullScreenPanel?.model === "Add Home Slide" && <AddHomeSlider />
+        }
+        {
+          isShowFullScreenPanel?.model === "Add New Category" && <AddCategory />
+        }
+        {
+          isShowFullScreenPanel?.model === "Add New Sub Category" && <AddSubCategory />
         }
       </Dialog>
 

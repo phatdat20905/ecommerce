@@ -21,7 +21,7 @@ body{font-family: "Montserrat", sans-serif; background-color: #f1f1f1;}
 
 .btn-blue:hover{background-color: #0d1e48 !important;}
 
-th.MuiTableCell-root{@apply bg-[#f1f1f1] p-1}
+th.MuiTableCell-root{@apply bg-[#f1f1f1] py-1}
 
 a.active button {
   background: #e8e8e8 !important;

@@ -309,7 +309,7 @@ const AddProduct = () => {
                     <div className="col w-full p-5 px-0">
                         <div className="bg-gray-100 p-4 w-full">
                             <div className="flex items-center gap-8">
-                                <h3 class="font-[700] text-[18px] mb-3">Banner Images</h3>
+                                <h3 className="font-[700] text-[18px] mb-3">Banner Images</h3>
                             </div>
                             <div className="grid grid-cols-2 md:grid-cols-7 gap-4">
                                 <div className="uploadBoxWrapper relative">

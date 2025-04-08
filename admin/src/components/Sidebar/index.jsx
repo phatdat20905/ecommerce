@@ -34,10 +34,12 @@ const SideBar = () => {
                 </div>
                 <ul className="mt-4 overflow-y-scroll max-h-[80vh]">
                     <li>
-                        <Button className="w-full !capitalize !justify-start flex gap-3 text-[14px] !text-[rgba(0,0,0,0.8)] !font-[500] items-center !py-2 hover:!bg-[#f1f1f1]">
-                            <RxDashboard className="text-[18px]" />
-                            <span>Dashboard</span>
-                        </Button>
+                        <Link to="/">
+                            <Button className="w-full !capitalize !justify-start flex gap-3 text-[14px] !text-[rgba(0,0,0,0.8)] !font-[500] items-center !py-2 hover:!bg-[#f1f1f1]">
+                                <RxDashboard className="text-[18px]" />
+                                <span>Dashboard</span>
+                            </Button>
+                        </Link>
                     </li>
                     <li>
                         <Button className="w-full !capitalize !justify-start flex gap-3 text-[14px] !text-[rgba(0,0,0,0.8)] !font-[500] items-center !py-2 hover:!bg-[#f1f1f1]">
@@ -52,7 +54,7 @@ const SideBar = () => {
                         <Collapse isOpened={submenuIndex === 1 ? true : false}>
                             <ul className="w-full">
                                 <li className="w-full">
-                                    <Link to={"/"}>
+                                    <Link to={"/homeSlider/list"}>
                                         <Button className="!text-[rgba(0,0,0,0.7)] !capitalize !justify-start !w-full !text-[13px] !font-[500] !pl-9 flex gap-3">
                                             <span className="block w-[5px] h-[5px] rounded-full bg-[rgba(0,0,0,0.2)]"></span>
                                             Home Banners List
@@ -60,12 +62,15 @@ const SideBar = () => {
                                     </Link>
                                 </li>
                                 <li className="w-full">
-                                    <Link to={"/"}>
-                                        <Button className="!text-[rgba(0,0,0,0.7)] !capitalize !justify-start !w-full !text-[13px] !font-[500] !pl-9 flex gap-3">
-                                            <span className="block w-[5px] h-[5px] rounded-full bg-[rgba(0,0,0,0.2)]"></span>
-                                            Add Home Banner Slide
-                                        </Button>
-                                    </Link>
+                                    <Button
+                                        onClick={() => context.setIsShowFullScreenPanel({
+                                            open: true,
+                                            model: 'Add Home Slide'
+                                        })}
+                                        className="!text-[rgba(0,0,0,0.7)] !capitalize !justify-start !w-full !text-[13px] !font-[500] !pl-9 flex gap-3">
+                                        <span className="block w-[5px] h-[5px] rounded-full bg-[rgba(0,0,0,0.2)]"></span>
+                                        Add Home Banner Slide
+                                    </Button>
                                 </li>
                             </ul>
                         </Collapse>
@@ -83,7 +88,7 @@ const SideBar = () => {
                         <Collapse isOpened={submenuIndex === 2 ? true : false}>
                             <ul className="w-full">
                                 <li className="w-full">
-                                    <Link to={"/categoies"}>
+                                    <Link to={"/category/list"}>
                                         <Button className="!text-[rgba(0,0,0,0.7)] !capitalize !justify-start !w-full !text-[13px] !font-[500] !pl-9 flex gap-3">
                                             <span className="block w-[5px] h-[5px] rounded-full bg-[rgba(0,0,0,0.2)]"></span>
                                             Category List
@@ -91,15 +96,18 @@ const SideBar = () => {
                                     </Link>
                                 </li>
                                 <li className="w-full">
-                                    <Link to={"/category/add"}>
-                                        <Button className="!text-[rgba(0,0,0,0.7)] !capitalize !justify-start !w-full !text-[13px] !font-[500] !pl-9 flex gap-3">
-                                            <span className="block w-[5px] h-[5px] rounded-full bg-[rgba(0,0,0,0.2)]"></span>
-                                            Add A Category
-                                        </Button>
-                                    </Link>
+                                    <Button
+                                        onClick={() => context.setIsShowFullScreenPanel({
+                                            open: true,
+                                            model: 'Add New Category'
+                                        })}
+                                        className="!text-[rgba(0,0,0,0.7)] !capitalize !justify-start !w-full !text-[13px] !font-[500] !pl-9 flex gap-3">
+                                        <span className="block w-[5px] h-[5px] rounded-full bg-[rgba(0,0,0,0.2)]"></span>
+                                        Add A Category
+                                    </Button>
                                 </li>
                                 <li className="w-full">
-                                    <Link to={"/category/subCat"}>
+                                    <Link to={"/subCategory/list"}>
                                         <Button className="!text-[rgba(0,0,0,0.7)] !capitalize !justify-start !w-full !text-[13px] !font-[500] !pl-9 flex gap-3">
                                             <span className="block w-[5px] h-[5px] rounded-full bg-[rgba(0,0,0,0.2)]"></span>
                                             Sub Category List
@@ -107,12 +115,15 @@ const SideBar = () => {
                                     </Link>
                                 </li>
                                 <li className="w-full">
-                                    <Link to={"/category/subCat/add"}>
-                                        <Button className="!text-[rgba(0,0,0,0.7)] !capitalize !justify-start !w-full !text-[13px] !font-[500] !pl-9 flex gap-3">
-                                            <span className="block w-[5px] h-[5px] rounded-full bg-[rgba(0,0,0,0.2)]"></span>
-                                            Add A Sub Category
-                                        </Button>
-                                    </Link>
+                                    <Button
+                                        onClick={() => context.setIsShowFullScreenPanel({
+                                            open: true,
+                                            model: 'Add New Sub Category'
+                                        })}
+                                        className="!text-[rgba(0,0,0,0.7)] !capitalize !justify-start !w-full !text-[13px] !font-[500] !pl-9 flex gap-3">
+                                        <span className="block w-[5px] h-[5px] rounded-full bg-[rgba(0,0,0,0.2)]"></span>
+                                        Add A Sub Category
+                                    </Button>
                                 </li>
                             </ul>
                         </Collapse>
@@ -176,16 +187,20 @@ const SideBar = () => {
                         </Collapse>
                     </li>
                     <li>
-                        <Button className="w-full !capitalize !justify-start flex gap-3 text-[14px] !text-[rgba(0,0,0,0.8)] !font-[500] items-center !py-2 hover:!bg-[#f1f1f1]">
-                            <FaUsers className="text-[18px]" />
-                            <span>Users</span>
-                        </Button>
+                        <Link to="/users">
+                            <Button className="w-full !capitalize !justify-start flex gap-3 text-[14px] !text-[rgba(0,0,0,0.8)] !font-[500] items-center !py-2 hover:!bg-[#f1f1f1]">
+                                <FaUsers className="text-[18px]" />
+                                <span>Users</span>
+                            </Button>
+                        </Link>
                     </li>
                     <li>
-                        <Button className="w-full !capitalize !justify-start flex gap-3 text-[14px] !text-[rgba(0,0,0,0.8)] !font-[500] items-center !py-2 hover:!bg-[#f1f1f1]">
-                            <BsBagCheck className="text-[18px]" />
-                            <span>Orders</span>
-                        </Button>
+                        <Link to="/orders">
+                            <Button className="w-full !capitalize !justify-start flex gap-3 text-[14px] !text-[rgba(0,0,0,0.8)] !font-[500] items-center !py-2 hover:!bg-[#f1f1f1]">
+                                <BsBagCheck className="text-[18px]" />
+                                <span>Orders</span>
+                            </Button>
+                        </Link>
                     </li>
                     <li>
                         <Button className="w-full !capitalize !justify-start flex gap-3 text-[14px] !text-[rgba(0,0,0,0.8)] !font-[500] items-center !py-2 hover:!bg-[#f1f1f1]">

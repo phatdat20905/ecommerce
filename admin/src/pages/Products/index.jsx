@@ -22,14 +22,14 @@ const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
 
 const columns = [
-    { id: 'product', label: 'PRODUCT', minWidth: 150, align: 'left' },
-    { id: 'category', label: 'CATEGORY', minWidth: 100, align: 'left' },
-    { id: 'subCategory', label: 'SUB CATEGORY', minWidth: 150, align: 'left' },
-    { id: 'price', label: 'PRICE', minWidth: 130, align: 'left' },
-    { id: 'sales', label: 'SALES', minWidth: 100, align: 'left' },
-    { id: 'stock', label: 'STOCK', minWidth: 100, align: 'left' },
-    { id: 'rating', label: 'RATING', minWidth: 100, align: 'left' },
-    { id: 'action', label: 'ACTION', minWidth: 120, align: 'left' },
+    { id: 'product', label: 'PRODUCT', minWidth: 150 },
+    { id: 'category', label: 'CATEGORY', minWidth: 100 },
+    { id: 'subCategory', label: 'SUB CATEGORY', minWidth: 150 },
+    { id: 'price', label: 'PRICE', minWidth: 130 },
+    { id: 'sales', label: 'SALES', minWidth: 100 },
+    { id: 'stock', label: 'STOCK', minWidth: 100 },
+    { id: 'rating', label: 'RATING', minWidth: 100 },
+    { id: 'action', label: 'ACTION', minWidth: 120 },
 ];
 
 
@@ -57,7 +57,7 @@ const Products = () => {
     return (
         <>
             <div className='flex items-center justify-between px-2 py-0 mt-3'>
-                <h2 class="text-[18px] font-[600]">Products <span class="font-[400] text-[14px]"></span></h2>
+                <h2 className="text-[18px] font-[600]">Products <span className="font-[400] text-[14px]"></span></h2>
                 <div className='col w-[75%] ml-auto flex items-center justify-end gap-3'>
                     <Button className='btn-blue !text-white btn-sm'
                         onClick={() => context.setIsShowFullScreenPanel({
@@ -71,7 +71,7 @@ const Products = () => {
             <div className='card my-4 pt-5 shadow-md sm:rounded-lg bg-white'>
                 <div className='grid grid-cols-1 sm:grid-cols-2  md:grid-cols-2 lg:grid-cols-4 w-full px-5 justify-beetween gap-4'>
                     <div className='col'>
-                        <h4 class="font-[600] text-[13px] mb-2">Category By</h4>
+                        <h4 className="font-[600] text-[13px] mb-2">Category By</h4>
                         <Select
                             className='w-full'
                             labelId="demo-simple-select-standard-label"
@@ -95,7 +95,7 @@ const Products = () => {
                         </Select>
                     </div>
                     <div className='col'>
-                        <h4 class="font-[600] text-[13px] mb-2">Sub Category By</h4>
+                        <h4 className="font-[600] text-[13px] mb-2">Sub Category By</h4>
                         <Select
                             className='w-full'
                             labelId="demo-simple-select-standard-label"
@@ -119,7 +119,7 @@ const Products = () => {
                         </Select>
                     </div>
                     <div className='col'>
-                        <h4 class="font-[600] text-[13px] mb-2">Third Level Sub Category By</h4>
+                        <h4 className="font-[600] text-[13px] mb-2">Third Level Sub Category By</h4>
                         <Select
                             className='w-full'
                             labelId="demo-simple-select-standard-label"
@@ -173,13 +173,13 @@ const Products = () => {
                                 <TableCell style={{ minWidth: columns.minWidth }}>
                                     <div className='flex items-center gap-4 w-[300px]'>
                                         <div className='img w-[65px] h-[65px] rounded-md overflow-hidden group cursor-pointer'>
-                                            <img alt="image" src="https://serviceapi.spicezgold.com/download/1743921851383_iphone-16-plus.png" class="w-full group-hover:scale-105 transition-all" />
+                                            <img alt="image" src="https://serviceapi.spicezgold.com/download/1743921851383_iphone-16-plus.png" className="w-full group-hover:scale-105 transition-all" />
                                         </div>
                                         <div className='info w-[75%]'>
                                             <h3 className='font-[600] text-[12px] leading-4 hover:text-primary'>
                                                 <Link to="/product/">Tran Viet Chinh...</Link>
                                                 <br />
-                                                <span class="text-[12px]">Bans</span>
+                                                <span className="text-[12px]">Bans</span>
                                             </h3>
                                         </div>
                                     </div>
@@ -191,16 +191,16 @@ const Products = () => {
                                     Mobiles
                                 </TableCell>
                                 <TableCell style={{ minWidth: columns.minWidth }}>
-                                    <div class="flex gap-1 flex-col">
-                                        <span class="oldPrice line-through leading-3 text-gray-500 text-[14px] font-[500]">₹11,090,000.00</span>
-                                        <span class="price text-primary text-[14px]  font-[600]">₹122,333,333.00</span>
+                                    <div className="flex gap-1 flex-col">
+                                        <span className="oldPrice line-through leading-3 text-gray-500 text-[14px] font-[500]">₹11,090,000.00</span>
+                                        <span className="price text-primary text-[14px]  font-[600]">₹122,333,333.00</span>
                                     </div>
                                 </TableCell>
                                 <TableCell style={{ minWidth: columns.minWidth }}>
-                                    <p class="text-[14px] w-[70px]"><span class="font-[600]">0</span> sale</p>
+                                    <p className="text-[14px] w-[70px]"><span className="font-[600]">0</span> sale</p>
                                 </TableCell>
                                 <TableCell style={{ minWidth: columns.minWidth }}>
-                                    <p class="text-[14px] w-[70px]"><span class="font-[600] text-primary">12</span></p>
+                                    <p className="text-[14px] w-[70px]"><span className="font-[600] text-primary">12</span></p>
                                 </TableCell>
                                 <TableCell style={{ minWidth: columns.minWidth }}>
                                     <Rating name="size-small" defaultValue={5} size="small" readOnly />

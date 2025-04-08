@@ -44,7 +44,7 @@ const MyAccount = () => {
                                 </div>
                             </div>
                             <br />
-                            <div className='class="flex items-center gap-4"'>
+                            <div className='className="flex items-center gap-4"'>
                                 <Button className='btn-org btn-sm w-[200px]'>
                                     UPDATE PROFILE
                                 </Button>

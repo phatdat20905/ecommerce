@@ -90,10 +90,10 @@ const Header = () => {
                                                     <Button className="!w-[40px] !h-[40px] !min-w-[40px] !rounded-full !bg-gray-200">
                                                         <FaRegUser className="text-[17px] text-[rgba(0,0,0,0.7)]" />
                                                     </Button>
-                                                    <div class="info flex flex-col">
+                                                    <div className="info flex flex-col">
 
-                                                        <h4 class="leading-3 text-[14px] text-[rgba(0,0,0,0.6)] font-[500] mb-0 capitalize text-left justify-start">idol tiktok</h4>
-                                                        <span class="text-[13px] text-[rgba(0,0,0,0.6)]  font-[400] capitalize text-left justify-start">tiktokidol800@gmail.com</span>
+                                                        <h4 className="leading-3 text-[14px] text-[rgba(0,0,0,0.6)] font-[500] mb-0 capitalize text-left justify-start">idol tiktok</h4>
+                                                        <span className="text-[13px] text-[rgba(0,0,0,0.6)]  font-[400] capitalize text-left justify-start">tiktokidol800@gmail.com</span>
                                                     </div>
                                                 </Button>
                                             </li>
