@@ -8,10 +8,19 @@ body{font-family: "Montserrat", sans-serif; background-color: #f1f1f1;}
 }
 .btn{padding: 8px 20px !important;}
 .btn-sm{padding: 6px 20px !important;}
-
+.btn-lg {
+  padding: 8px 20px !important;
+  font-size: 16px !important;
+}
 
 .btn-blue{background-color: #3872fa !important; color: #fff !important; padding: 8px 20px !important;}
 
 .btn-blue:hover{background-color: #0d1e48 !important;}
 
 th.MuiTableCell-root{@apply bg-[#f1f1f1] p-1}
+
+a.active button {
+  background: #e8e8e8 !important;
+}
+
+.MuiButton-icon svg{font-size: 25px !important;}
