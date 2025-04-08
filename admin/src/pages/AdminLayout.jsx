@@ -2,9 +2,9 @@ import React, { useContext } from 'react';
 import { MyContext } from '../App';
 import Header from '../components/Header';
 import SideBar from '../components/SideBar';
-import Dashboard from './Dashboard';
+import { Outlet } from 'react-router-dom';
 
-const Layout = () => {
+const AdminLayout = () => {
     const { isSidebarOpen } = useContext(MyContext);
 
     return (
@@ -18,11 +18,11 @@ const Layout = () => {
                     className={`contentRight overflow-hidden py-20 px-5 transition-all duration-300 ${isSidebarOpen ? 'w-[80%] ml-[20%]' : 'w-full ml-0'
                         }`}
                 >
-                    <Dashboard />
+                    <Outlet />
                 </div>
             </div>
         </section>
     );
 };
 
-export default Layout;
+export default AdminLayout;

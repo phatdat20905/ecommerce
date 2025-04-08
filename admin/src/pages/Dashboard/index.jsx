@@ -1,4 +1,4 @@
-import React, { useState, PureComponent } from 'react';
+import React, { useState, PureComponent, useContext } from 'react';
 import DashboardBoxex from '../../components/DashboardBoxes';
 import Button from '@mui/material/Button';
 import { LuPlus } from "react-icons/lu";
@@ -23,6 +23,8 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import { IoSearchOutline } from "react-icons/io5";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import SearchBox from '../../components/SearchBox';
+import { MyContext } from '../../App';
 
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
@@ -39,10 +41,11 @@ const columns = [
 ];
 
 const Dashboard = () => {
+    const context = useContext(MyContext);
     const [isOpenOrderProduct, setIsOpenOrderProduct] = useState(null);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
-    const [categoryFilterVal, setAge] = useState('');
+    const [categoryFilterVal, setCategoryFilter] = useState('');
     const [chart1Data, setChart1Data] = useState([
         {
             name: 'Page A',
@@ -108,7 +111,7 @@ const Dashboard = () => {
 
 
     const handleChangeCatFilter = (event) => {
-        setAge(event.target.value);
+        setCategoryFilter(event.target.value);
     };
 
     return (
@@ -125,7 +128,12 @@ const Dashboard = () => {
                     </h1>
                     <p>Here’s What happening on your store today. See the statistics at once.</p>
                     <br />
-                    <Button className='btn-blue btn !capitalize'>
+                    <Button className='btn-blue btn !capitalize'
+                        onClick={() => context.setIsShowFullScreenPanel({
+                            open: true,
+                            model: 'Add Product'
+                        })}
+                    >
                         <LuPlus /> Add Product
                     </Button>
                 </div>
@@ -135,7 +143,12 @@ const Dashboard = () => {
             <div className='flex items-center justify-between px-2 py-0 mt-5'>
                 <h2 class="text-[18px] font-[600]">Products <span class="font-[400] text-[14px]"></span></h2>
                 <div className='col w-[75%] ml-auto flex items-center justify-end gap-3'>
-                    <Button className='btn-blue !text-white'>Add Product</Button>
+                    <Button className='btn-blue !text-white'
+                        onClick={() => context.setIsShowFullScreenPanel({
+                            open: true,
+                            model: 'Add Product'
+                        })}
+                    >Add Product</Button>
                 </div>
             </div>
 
@@ -214,16 +227,7 @@ const Dashboard = () => {
                         </Select>
                     </div>
                     <div className='col w-full ml-auto flex items-center'>
-                        <div className='w-full' style={{ alignSelf: "end" }}>
-                            <div className='w-full h-auto bg-[#f1f1f1] relative overflow-hidden'>
-                                <IoSearchOutline className='absolute top-[13px] left-[10px] z-50 pointer-events-none opacity-80' />
-                                <input
-                                    type="text"
-                                    className="w-full h-[40px] border border-[rgba(0,0,0,0.1)] bg-[#f1f1f1] p-2 pl-8 focus:outline-none focus:border-[rgba(0,0,0,0.5)] rounded-md text-[13px]"
-                                    placeholder="Search here..." value=""
-                                />
-                            </div>
-                        </div>
+                        <SearchBox />
                     </div>
                 </div>
                 <br />
