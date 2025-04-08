@@ -27,6 +27,9 @@ import SubCategoryList from './pages/Category/subCatList';
 import AddSubCategory from './pages/Category/addSubCategory';
 import Users from './pages/Users';
 import Orders from './pages/Orders';
+import ForgotPassword from './pages/ForgotPassword';
+import VerifyAccount from './pages/VerifyAccount';
+import ChangePassword from './pages/ChangePassword';
 
 const MyContext = createContext();
 
@@ -65,6 +68,21 @@ function App() {
       path: '/sign-up',
       exact: true,
       element: <SignUp />,
+    },
+    {
+      path: '/forgot-password',
+      exact: true,
+      element: <ForgotPassword />,
+    },
+    {
+      path: '/verify-account',
+      exact: true,
+      element: <VerifyAccount />,
+    },
+    {
+      path: '/change-password',
+      exact: true,
+      element: <ChangePassword />,
     },
   ]);
 
