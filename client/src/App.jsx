@@ -2,13 +2,11 @@ import React, { createContext, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./pages/Layout";
 import Products from "./pages/Product";
-// import Cart from "./pages/Cart";
 import Home from "./pages/Home";
 import ProductListing from "./pages/ProductListing";
 import ProductDetails from "./pages/ProductDetails";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
@@ -17,7 +15,6 @@ import { IoCloseSharp } from "react-icons/io5";
 import ProductDetailsComponent from "./components/ProductDetailsComponent";
 import CartPage from "./pages/CartPage";
 import Verify from "./pages/Verify";
-
 import toast, { Toaster } from 'react-hot-toast';
 import ForgotPassword from "./pages/ForgotPassword";
 import Checkout from "./pages/Checkout";
@@ -26,21 +23,18 @@ import MyList from "./pages/MyList";
 import Orders from "./pages/Orders";
 import ProtectedRoute from "./components/ProtectedRoute/indes";
 
-
-const MyContext = createContext();
+export const MyContext = createContext();
 
 function App() {
-  const [isLogin, setIsLogin] = useState(true);
-
   const [openProductDetailsModal, setOpenProductDetailsModal] = useState(false);
   const [fullWidth, setFullWidth] = useState(true);
   const [maxWidth, setMaxWidth] = useState('lg');
-
   const [openCartPanel, setOpenCartPanel] = useState(false);
 
   const toggleCartPanel = (newOpen) => () => {
     setOpenCartPanel(newOpen);
   };
+
   const handleCloseProductDetailsModal = () => {
     setOpenProductDetailsModal(false);
   };
@@ -50,9 +44,7 @@ function App() {
     setOpenCartPanel,
     openCartPanel,
     toggleCartPanel,
-    isLogin,
-    setIsLogin,
-  }
+  };
 
   return (
     <>
@@ -79,7 +71,6 @@ function App() {
               <Route path="checkout" element={<Checkout />} />
               <Route path="my-orders" element={<Orders />} />
               <Route path="my-list" element={<MyList />} />
-              {/* <Route path="/about" element={<AboutPage />} /> */}
               <Route path="/product" element={<Products />} />
             </Route>
           </Routes>
@@ -89,7 +80,6 @@ function App() {
           position="top-right"
           reverseOrder={false}
           toastOptions={{
-            // Áp dụng cho mọi loại toast
             duration: 4000,
             style: {
               background: '#333',
@@ -97,8 +87,6 @@ function App() {
               borderRadius: '8px',
               padding: '12px 16px',
             },
-
-            // Cấu hình riêng từng loại
             success: {
               icon: '✅',
               style: {
@@ -121,8 +109,6 @@ function App() {
             },
           }}
         />
-
-
       </BrowserRouter>
 
       <Dialog
@@ -136,21 +122,23 @@ function App() {
       >
         <DialogContent>
           <div className="flex items-center w-full productDetailsModalContainer relative">
-            <Button className="!w-[40px] !h-[40px] !min-w-[40px] !rounded-full !text-[#000] !absolute top-[15px] right-[15px] !bg-[#f1f1f1]" onClick={() => handleCloseProductDetailsModal()}><IoCloseSharp className="text-[20px]" /></Button>
+            <Button
+              className="!w-[40px] !h-[40px] !min-w-[40px] !rounded-full !text-[#000] !absolute top-[15px] right-[15px] !bg-[#f1f1f1]"
+              onClick={handleCloseProductDetailsModal}
+            >
+              <IoCloseSharp className="text-[20px]" />
+            </Button>
             <div className="col1 w-[40%] px-3 py-8">
               <ProductZoom />
             </div>
-            <div className="col2 w-[60%] py-8 px-8 pr-16 productContent ">
+            <div className="col2 w-[60%] py-8 px-8 pr-16 productContent">
               <ProductDetailsComponent />
             </div>
           </div>
         </DialogContent>
       </Dialog>
-
-
     </>
   );
 }
 
 export default App;
-export { MyContext };
