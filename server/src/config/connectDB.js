@@ -9,13 +9,7 @@ const sequelize = new Sequelize(
         host: process.env.DB_HOST,
         port: process.env.DB_PORT,
         dialect: 'mysql',
-        logging: console.log, // Hiển thị các truy vấn SQL (tắt bằng false khi production)
-        pool: {
-            max: 5, // Số kết nối tối đa
-            min: 0,
-            acquire: 30000,
-            idle: 10000
-        }
+        logging: false,
     }
 );
 

@@ -7,10 +7,9 @@ module.exports = (sequelize, DataTypes) => {
       User.hasMany(models.Address, { foreignKey: 'user_id' });
       User.hasMany(models.Order, { foreignKey: 'user_id' });
       User.hasMany(models.Cart, { foreignKey: 'user_id' });
-      User.hasMany(models.SearchHistory, { foreignKey: 'user_id' });
       User.hasMany(models.Wishlist, { foreignKey: 'user_id' });
       User.hasMany(models.ProductReview, { foreignKey: 'user_id' });
-      User.hasMany(models.PasswordResetToken, { foreignKey: 'user_id' });
+      User.hasMany(models.OtpToken, { foreignKey: 'user_id' });
       User.hasMany(models.RefreshToken, { foreignKey: 'user_id' });
     }
   }
@@ -33,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING(100),
     },
     avatar_url: {
-      type: DataTypes.STRING(255), // Lưu URL ảnh từ Cloudinary
+      type: DataTypes.STRING(255),
     },
     role_id: {
       type: DataTypes.INTEGER,

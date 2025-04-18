@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
         }
     }
     RefreshToken.init({
-        token_id: {
+        id: {
             type: DataTypes.INTEGER,
             autoIncrement: true,
             primaryKey: true,

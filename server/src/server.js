@@ -4,6 +4,7 @@ import cors from 'cors';
 import morgan from 'morgan';
 import helmet from 'helmet';
 import connectDB from './config/connectDB.js';
+import apiRoutes from './routes/index.js';
 dotenv.config();
 
 connectDB();
@@ -14,7 +15,7 @@ app.use(helmet()); // Thêm header bảo mật
 app.use(cors());
 app.use(morgan('dev')); // Ghi log yêu cầu HTTP
 app.use(express.json()); // Parse JSON body
-app.use(express.urlencoded({ extended: false })); // Parse URL-encoded body
+app.use(express.urlencoded({ extended: true })); // Parse URL-encoded body
 
 // Route cơ bản
 app.get('/', (req, res) => {
@@ -22,7 +23,7 @@ app.get('/', (req, res) => {
 });
 
 // Routes
-// app.use('/api', apiRoutes);
+app.use('/api', apiRoutes);
 
 // Khởi động server
 const PORT = process.env.PORT || 8082;
