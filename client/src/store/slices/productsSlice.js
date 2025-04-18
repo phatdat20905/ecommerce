@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import api from '../../config/axios'; // Chúng ta sẽ tạo file này sau
+import api from '../../utils/customAxios'; // Chúng ta sẽ tạo file này sau
 
 // Thunk để lấy danh sách sản phẩm từ API
 export const fetchProducts = createAsyncThunk('products/fetchProducts', async (_, { rejectWithValue }) => {

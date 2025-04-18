@@ -24,6 +24,7 @@ import Checkout from "./pages/Checkout";
 import MyAccount from "./pages/MyAccount";
 import MyList from "./pages/MyList";
 import Orders from "./pages/Orders";
+import ProtectedRoute from "./components/ProtectedRoute/indes";
 
 
 const MyContext = createContext();
@@ -64,7 +65,14 @@ function App() {
               <Route path="product/:id" element={<ProductDetails />} />
               <Route path="login" element={<Login />} />
               <Route path="register" element={<Register />} />
-              <Route path="my-account" element={<MyAccount />} />
+              <Route
+                path="/my-account"
+                element={
+                  <ProtectedRoute>
+                    <MyAccount />
+                  </ProtectedRoute>
+                }
+              />
               <Route path="verify" element={<Verify />} />
               <Route path="forgot-password" element={<ForgotPassword />} />
               <Route path="cart" element={<CartPage />} />
