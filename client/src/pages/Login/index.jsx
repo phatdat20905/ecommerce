@@ -6,7 +6,7 @@ import { IoMdEye, IoMdEyeOff } from 'react-icons/io';
 import { Link, useNavigate } from 'react-router-dom';
 import { FcGoogle } from 'react-icons/fc';
 import { useDispatch, useSelector } from 'react-redux';
-import { loginUser } from '../../store/slices/authSlice';
+import { loginUser, googleLogin } from '../../store/slices/authSlice';
 
 const Login = () => {
     const [isShowPassword, setIsShowPassword] = useState(false);
@@ -27,15 +27,20 @@ const Login = () => {
         e.preventDefault();
         const result = await dispatch(loginUser(formFields));
         if (loginUser.fulfilled.match(result)) {
-            navigate('/'); // Chuyển hướng sau khi đăng nhập thành công
+            navigate('/');
+        }
+    };
+
+    const handleGoogleLogin = async () => {
+        const result = await dispatch(googleLogin());
+        if (googleLogin.fulfilled.match(result)) {
+            navigate('/');
         }
     };
 
     const handleForgotPassword = () => {
         if (formFields.email) {
             navigate('/forgot-password', { state: { email: formFields.email } });
-        } else {
-            toast.error('Please enter your email first');
         }
     };
 
@@ -105,7 +110,11 @@ const Login = () => {
                             </Link>
                         </p>
                         <p className="text-center font-[500]">Or continue with social account</p>
-                        <Button className="flex gap-3 w-full !bg-[#f1f1f1] btn-lg !text-black">
+                        <Button
+                            onClick={handleGoogleLogin}
+                            className="flex gap-3 w-full !bg-[#f1f1f1] btn-lg !text-black"
+                            disabled={isLoading}
+                        >
                             <FcGoogle className="text-[20px]" />
                             Login with Google
                         </Button>

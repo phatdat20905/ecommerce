@@ -5,7 +5,15 @@ import morgan from 'morgan';
 import helmet from 'helmet';
 import connectDB from './config/connectDB.js';
 import apiRoutes from './routes/index.js';
+import admin from 'firebase-admin';
+import serviceAccount from './config/serviceAccountKey.json';
+
 dotenv.config();
+
+// Khởi tạo Firebase Admin SDK
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+});
 
 connectDB();
 const app = express();

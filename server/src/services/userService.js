@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 import db from '../models/index.js';
 import { sendEmail } from '../config/emailConfig.js';
 import { deleteFromCloudinary } from '../config/cloudinaryConfig.js';
+import admin from 'firebase-admin';
 
 const saltRounds = 10;
 
@@ -23,6 +24,80 @@ const hashUserPassword = async (password) => {
 export const checkEmail = async (email) => {
     const user = await db.User.findOne({ where: { email } });
     return user !== null;
+};
+
+// Hàm đăng nhập bằng Google Firebase
+export const firebaseGoogleLogin = async (idToken) => {
+    try {
+        if (!idToken) {
+            return {
+                errCode: 1,
+                errMessage: 'ID token is required',
+            };
+        }
+
+        // Xác thực Firebase ID token
+        const decodedToken = await admin.auth().verifyIdToken(idToken);
+        const { email, name, picture } = decodedToken;
+
+        // Tìm hoặc tạo user
+        let user = await db.User.findOne({ where: { email } });
+        if (!user) {
+            user = await db.User.create({
+                email,
+                full_name: name,
+                avatar_url: picture,
+                provider: 'google',
+                role_id: 2, // User thường
+            });
+        } else if (user.provider !== 'google') {
+            return {
+                errCode: 2,
+                errMessage: 'Email already registered with another provider',
+            };
+        }
+
+        // Tạo access token
+        const accessToken = jwt.sign(
+            { user_id: user.user_id, role_id: user.role_id },
+            process.env.JWT_SECRET,
+            { expiresIn: '15m' }
+        );
+
+        // Tạo refresh token
+        const refreshToken = jwt.sign(
+            { user_id: user.user_id },
+            process.env.JWT_REFRESH_SECRET,
+            { expiresIn: '7d' }
+        );
+
+        // Xóa refresh token cũ
+        await db.RefreshToken.destroy({ where: { user_id: user.user_id } });
+        await db.RefreshToken.create({
+            user_id: user.user_id,
+            token: refreshToken,
+            expires_at: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+        });
+
+        // Trả về user không có password
+        const userWithoutPassword = { ...user.dataValues };
+        delete userWithoutPassword.password;
+
+        return {
+            errCode: 0,
+            errMessage: 'Google login successful',
+            data: {
+                accessToken,
+                refreshToken,
+                user: userWithoutPassword,
+            },
+        };
+    } catch (error) {
+        return {
+            errCode: -1,
+            errMessage: `Error during Google login: ${error.message}`,
+        };
+    }
 };
 
 // Hàm đăng ký người dùng

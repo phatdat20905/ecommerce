@@ -16,7 +16,7 @@ module.exports = {
       },
       password: {
         type: Sequelize.STRING(255),
-        allowNull: false,
+        allowNull: true,
       },
       full_name: {
         type: Sequelize.STRING(100),
@@ -27,6 +27,12 @@ module.exports = {
       role_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        defaultValue: 2,
+      },
+      provider: {
+        type: Sequelize.STRING, // "local" hoặc "google"
+        allowNull: true,
+        defaultValue: 'local',
       },
       created_at: {
         type: Sequelize.DATE,

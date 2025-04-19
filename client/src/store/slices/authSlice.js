@@ -1,6 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import api from '../../utils/customAxios'; // Sửa đường dẫn
+import api from '../../utils/customAxios';
 import toast from 'react-hot-toast';
+import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import { auth } from '../../firebase';
 
 // Thunk để đăng ký người dùng
 export const registerUser = createAsyncThunk(
@@ -11,7 +13,7 @@ export const registerUser = createAsyncThunk(
         email: userData.email,
         password: userData.password,
         full_name: userData.full_name,
-        role_id: 2, // Mặc định role user
+        role_id: 2,
       });
       return response.data;
     } catch (error) {
@@ -20,11 +22,18 @@ export const registerUser = createAsyncThunk(
   }
 );
 
-// Thunk để đăng nhập người dùng
+// Thunk để đăng nhập người dùng (email/password)
 export const loginUser = createAsyncThunk(
   'auth/loginUser',
   async (userData, { rejectWithValue }) => {
     try {
+      if (!userData.email || !userData.password) {
+        return rejectWithValue({
+          errCode: 1,
+          errMessage: 'Missing email or password',
+        });
+      }
+
       const response = await api.post('/api/users/login', {
         email: userData.email,
         password: userData.password,
@@ -32,6 +41,22 @@ export const loginUser = createAsyncThunk(
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || { errMessage: 'Login failed' });
+    }
+  }
+);
+
+// Thunk để đăng nhập bằng Google
+export const googleLogin = createAsyncThunk(
+  'auth/googleLogin',
+  async (_, { rejectWithValue }) => {
+    try {
+      const provider = new GoogleAuthProvider();
+      const result = await signInWithPopup(auth, provider);
+      const idToken = await result.user.getIdToken();
+      const response = await api.post('/api/users/firebase-google-login', { idToken });
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || { errMessage: 'Google login failed' });
     }
   }
 );
@@ -122,7 +147,7 @@ const authSlice = createSlice({
     refreshToken: localStorage.getItem('refreshToken') || null,
     isLoading: false,
     error: null,
-    otpRequestedEmail: null, // Lưu email khi yêu cầu OTP
+    otpRequestedEmail: null,
   },
   reducers: {
     clearError: (state) => {
@@ -177,6 +202,32 @@ const authSlice = createSlice({
         toast.error(action.payload.errMessage);
       });
 
+    // Google Login
+    builder
+      .addCase(googleLogin.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(googleLogin.fulfilled, (state, action) => {
+        state.isLoading = false;
+        if (action.payload.errCode === 0) {
+          state.user = action.payload.data.user;
+          state.accessToken = action.payload.data.accessToken;
+          state.refreshToken = action.payload.data.refreshToken;
+          localStorage.setItem('accessToken', action.payload.data.accessToken);
+          localStorage.setItem('refreshToken', action.payload.data.refreshToken);
+          toast.success(action.payload.errMessage);
+        } else {
+          state.error = action.payload.errMessage;
+          toast.error(action.payload.errMessage);
+        }
+      })
+      .addCase(googleLogin.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload.errMessage;
+        toast.error(action.payload.errMessage);
+      });
+
     // Request OTP
     builder
       .addCase(requestOtp.pending, (state) => {
@@ -186,7 +237,7 @@ const authSlice = createSlice({
       .addCase(requestOtp.fulfilled, (state, action) => {
         state.isLoading = false;
         if (action.payload.errCode === 0) {
-          state.otpRequestedEmail = action.meta.arg.email; // Lưu email
+          state.otpRequestedEmail = action.meta.arg.email;
           toast.success(action.payload.errMessage);
         } else {
           state.error = action.payload.errMessage;
@@ -229,7 +280,7 @@ const authSlice = createSlice({
       .addCase(resetPassword.fulfilled, (state, action) => {
         state.isLoading = false;
         if (action.payload.errCode === 0) {
-          state.otpRequestedEmail = null; // Xóa email sau khi reset thành công
+          state.otpRequestedEmail = null;
           toast.success(action.payload.errMessage);
         } else {
           state.error = action.payload.errMessage;

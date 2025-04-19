@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     password: {
       type: DataTypes.STRING(255),
-      allowNull: false,
+      allowNull: true,
     },
     full_name: {
       type: DataTypes.STRING(100),
@@ -37,6 +37,12 @@ module.exports = (sequelize, DataTypes) => {
     role_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      defaultValue: 2,
+    },
+    provider: {
+      type: DataTypes.STRING, // "local" hoặc "google"
+      allowNull: true,
+      defaultValue: 'local',
     },
     created_at: {
       type: DataTypes.DATE,

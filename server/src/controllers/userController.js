@@ -33,6 +33,22 @@ export const loginUser = async (req, res) => {
     }
 };
 
+export const firebaseGoogleLogin = async (req, res) => {
+    try {
+        const result = await userService.firebaseGoogleLogin(req.body.idToken);
+        return res.status(result.errCode === 0 ? 200 : 400).json({
+            errCode: result.errCode,
+            errMessage: result.errMessage,
+            data: result.data,
+        });
+    } catch (error) {
+        return res.status(500).json({
+            errCode: -1,
+            errMessage: `Server error: ${error.message}`,
+        });
+    }
+};
+
 export const logoutUser = async (req, res) => {
     try {
         const result = await userService.logoutUser(req.body.refreshToken);
