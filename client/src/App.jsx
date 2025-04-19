@@ -22,6 +22,7 @@ import MyAccount from "./pages/MyAccount";
 import MyList from "./pages/MyList";
 import Orders from "./pages/Orders";
 import ProtectedRoute from "./components/ProtectedRoute/indes";
+import ResetPassword from "./pages/ResetPassword";
 
 export const MyContext = createContext();
 
@@ -65,8 +66,9 @@ function App() {
                   </ProtectedRoute>
                 }
               />
-              <Route path="verify" element={<Verify />} />
-              <Route path="forgot-password" element={<ForgotPassword />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
+              <Route path="/verify" element={<Verify />} />
+              <Route path="/reset-password" element={<ResetPassword />} />
               <Route path="cart" element={<CartPage />} />
               <Route path="checkout" element={<Checkout />} />
               <Route path="my-orders" element={<Orders />} />

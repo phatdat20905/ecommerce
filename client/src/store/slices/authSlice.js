@@ -80,7 +80,7 @@ export const verifyOtp = createAsyncThunk(
   async ({ email, otp }, { rejectWithValue }) => {
     try {
       const response = await api.post('/api/users/verify-otp', { email, otp });
-      return response.data;
+      return { ...response.data, email, otp };
     } catch (error) {
       return rejectWithValue(error.response?.data || { errMessage: 'Failed to verify OTP' });
     }
@@ -92,7 +92,7 @@ export const resetPassword = createAsyncThunk(
   'auth/resetPassword',
   async ({ email, password, otp }, { rejectWithValue }) => {
     try {
-      const response = await api.post('/api/users/reset-password', { email, password, otp });
+      const response = await api.post('/api/users/reset-password', { email, newPassword: password, otp });
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || { errMessage: 'Failed to reset password' });
@@ -103,9 +103,13 @@ export const resetPassword = createAsyncThunk(
 // Thunk để đăng xuất
 export const logoutUser = createAsyncThunk(
   'auth/logoutUser',
-  async (_, { rejectWithValue }) => {
+  async (_, { getState, rejectWithValue }) => {
     try {
-      const response = await api.post('/api/users/logout');
+      const { refreshToken } = getState().auth;
+      if (!refreshToken) {
+        return { errCode: 0, errMessage: 'Logged out successfully' };
+      }
+      const response = await api.post('/api/users/logout', { refreshToken });
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || { errMessage: 'Logout failed' });
@@ -148,6 +152,7 @@ const authSlice = createSlice({
     isLoading: false,
     error: null,
     otpRequestedEmail: null,
+    verifiedOtp: null,
   },
   reducers: {
     clearError: (state) => {
@@ -259,6 +264,8 @@ const authSlice = createSlice({
       .addCase(verifyOtp.fulfilled, (state, action) => {
         state.isLoading = false;
         if (action.payload.errCode === 0) {
+          state.otpRequestedEmail = action.payload.email;
+          state.verifiedOtp = action.payload.otp;
           toast.success(action.payload.errMessage);
         } else {
           state.error = action.payload.errMessage;
@@ -281,6 +288,7 @@ const authSlice = createSlice({
         state.isLoading = false;
         if (action.payload.errCode === 0) {
           state.otpRequestedEmail = null;
+          state.verifiedOtp = null;
           toast.success(action.payload.errMessage);
         } else {
           state.error = action.payload.errMessage;

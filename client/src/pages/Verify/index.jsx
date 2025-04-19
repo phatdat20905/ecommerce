@@ -13,7 +13,6 @@ const Verify = () => {
     const location = useLocation();
     const { isLoading, otpRequestedEmail } = useSelector((state) => state.auth);
 
-    // Lấy email từ state (truyền từ forgot-password)
     const email = location.state?.email || otpRequestedEmail || '';
 
     const handleOtpChange = (value) => {
@@ -33,7 +32,7 @@ const Verify = () => {
         }
         const result = await dispatch(verifyOtp({ email, otp }));
         if (verifyOtp.fulfilled.match(result)) {
-            navigate('/reset-password', { state: { email, otp } });
+            navigate('/reset-password');
         }
     };
 
@@ -42,7 +41,7 @@ const Verify = () => {
             <div className="container">
                 <div className="card shadow-md w-full sm:w-[400px] m-auto rounded-md bg-white p-5 px-10">
                     <div className="text-center flex items-center justify-center">
-                        <img src="/verify3.png" width="80" />
+                        <img src="/verify3.png" width="80" alt="Verify OTP" />
                     </div>
                     <h3 className="text-center text-[18px] text-black">Verify OTP</h3>
                     <p className="text-center mt-0 mb-4">
@@ -57,7 +56,7 @@ const Verify = () => {
                                 className="w-full btn-org btn-lg"
                                 disabled={isLoading}
                             >
-                                {isLoading ? 'Verifying...' : 'Verify OTP'}
+                                {isLoading ? 'Verifying...' : 'VERIFY OTP'}
                             </Button>
                         </div>
                     </form>

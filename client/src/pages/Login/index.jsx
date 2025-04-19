@@ -41,6 +41,8 @@ const Login = () => {
     const handleForgotPassword = () => {
         if (formFields.email) {
             navigate('/forgot-password', { state: { email: formFields.email } });
+        } else {
+            navigate('/forgot-password');
         }
     };
 

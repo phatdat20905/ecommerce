@@ -7,7 +7,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { FcGoogle } from 'react-icons/fc';
 import { FaUser } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
-import { registerUser } from '../../store/slices/authSlice';
+import { registerUser, googleLogin } from '../../store/slices/authSlice';
 
 const Register = () => {
     const [isShowPassword, setIsShowPassword] = useState(false);
@@ -29,7 +29,14 @@ const Register = () => {
         e.preventDefault();
         const result = await dispatch(registerUser(formFields));
         if (registerUser.fulfilled.match(result)) {
-            navigate('/login'); // Chuyển hướng đến trang đăng nhập
+            navigate('/login');
+        }
+    };
+
+    const handleGoogleSignUp = async () => {
+        const result = await dispatch(googleLogin());
+        if (googleLogin.fulfilled.match(result)) {
+            navigate('/');
         }
     };
 
@@ -113,7 +120,11 @@ const Register = () => {
                             </Link>
                         </p>
                         <p className="text-center font-[500]">Or continue with social account</p>
-                        <Button className="flex gap-3 w-full !bg-[#f1f1f1] btn-lg !text-black">
+                        <Button
+                            onClick={handleGoogleSignUp}
+                            className="flex gap-3 w-full !bg-[#f1f1f1] btn-lg !text-black"
+                            disabled={isLoading}
+                        >
                             <FcGoogle className="text-[20px]" />
                             SIGN UP WITH GOOGLE
                         </Button>
