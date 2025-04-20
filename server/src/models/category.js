@@ -18,9 +18,6 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             unique: true,
         },
-        description: {
-            type: DataTypes.TEXT,
-        },
         parent_id: {
             type: DataTypes.INTEGER,
         },

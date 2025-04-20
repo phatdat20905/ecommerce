@@ -14,9 +14,6 @@ module.exports = {
                 allowNull: false,
                 unique: true,
             },
-            description: {
-                type: Sequelize.TEXT,
-            },
             parent_id: {
                 type: Sequelize.INTEGER,
             },
