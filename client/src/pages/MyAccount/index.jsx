@@ -15,6 +15,7 @@ const MyAccount = () => {
     const [formFields, setFormFields] = useState({
         full_name: '',
         email: '',
+        phone: '',
     });
 
     // Kiểm tra đăng nhập
@@ -31,6 +32,7 @@ const MyAccount = () => {
             setFormFields({
                 full_name: user.full_name || '',
                 email: user.email || '',
+                phone: user.phone || '',
             });
         } else if (user?.user_id) {
             dispatch(fetchUser(user.user_id));
@@ -43,6 +45,7 @@ const MyAccount = () => {
             setFormFields({
                 full_name: user.full_name || '',
                 email: user.email || '',
+                phone: user.phone || '',
             });
         }
     }, [user]);
@@ -54,10 +57,10 @@ const MyAccount = () => {
     const handleUpdateProfile = async (e) => {
         e.preventDefault();
         if (!formFields.full_name || !formFields.email) {
-            toast.error('Please fill in all fields');
+            toast.error('Please fill in all required fields');
             return;
         }
-        const result = await dispatch(updateUser(formFields));
+        const result = await dispatch(updateUser({ user_id: user.user_id, ...formFields }));
         if (updateUser.fulfilled.match(result)) {
             toast.success(result.payload.errMessage);
         } else {
@@ -117,6 +120,18 @@ const MyAccount = () => {
                                         value={formFields.email}
                                         onChange={handleInputChange}
                                         required
+                                    />
+                                </div>
+                                <div className="col">
+                                    <TextField
+                                        label="Phone Number"
+                                        variant="outlined"
+                                        size="small"
+                                        className="w-full"
+                                        name="phone"
+                                        type="tel"
+                                        value={formFields.phone}
+                                        onChange={handleInputChange}
                                     />
                                 </div>
                             </div>

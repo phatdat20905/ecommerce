@@ -29,6 +29,10 @@ module.exports = {
         allowNull: false,
         defaultValue: 2,
       },
+      phone: {
+        type: Sequelize.STRING(20),
+        allowNull: true,
+      },
       provider: {
         type: Sequelize.STRING, // "local" hoặc "google"
         allowNull: true,

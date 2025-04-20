@@ -39,6 +39,10 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       defaultValue: 2,
     },
+    phone: {
+      type: DataTypes.STRING(20),
+      allowNull: true,
+    },
     provider: {
       type: DataTypes.STRING, // "local" hoặc "google"
       allowNull: true,

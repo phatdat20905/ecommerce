@@ -13,6 +13,7 @@ export const registerUser = createAsyncThunk(
         email: userData.email,
         password: userData.password,
         full_name: userData.full_name,
+        phone: userData.phone,
         role_id: 2,
       });
       return response.data;

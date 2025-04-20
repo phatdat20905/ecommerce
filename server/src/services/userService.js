@@ -26,6 +26,13 @@ export const checkEmail = async (email) => {
     return user !== null;
 };
 
+// Hàm kiểm tra số điện thoại
+export const checkPhone = async (phone) => {
+    if (!phone) return false;
+    const user = await db.User.findOne({ where: { phone } });
+    return user !== null;
+};
+
 // Hàm đăng nhập bằng Google Firebase
 export const firebaseGoogleLogin = async (idToken) => {
     try {
@@ -47,6 +54,7 @@ export const firebaseGoogleLogin = async (idToken) => {
                 email,
                 full_name: name,
                 avatar_url: picture,
+                phone: null, // Số điện thoại để trống khi đăng nhập bằng Google
                 provider: 'google',
                 role_id: 2, // User thường
             });
@@ -103,7 +111,7 @@ export const firebaseGoogleLogin = async (idToken) => {
 // Hàm đăng ký người dùng
 export const registerUser = async (userData) => {
     try {
-        const { email, password, full_name, avatar_url, role_id } = userData;
+        const { email, password, full_name, phone, avatar_url, role_id } = userData;
 
         if (!email || !password) {
             return {
@@ -120,6 +128,16 @@ export const registerUser = async (userData) => {
             };
         }
 
+        if (phone) {
+            const phoneExists = await checkPhone(phone);
+            if (phoneExists) {
+                return {
+                    errCode: 3,
+                    errMessage: 'Phone number already exists',
+                };
+            }
+        }
+
         const hashedPassword = await hashUserPassword(password);
         if (hashedPassword.errCode) return hashedPassword;
 
@@ -127,6 +145,7 @@ export const registerUser = async (userData) => {
             email,
             password: hashedPassword,
             full_name,
+            phone,
             avatar_url,
             role_id: role_id || 2,
         });
@@ -304,7 +323,7 @@ export const refreshAccessToken = async (refreshToken) => {
 // Hàm chỉnh sửa thông tin người dùng
 export const updateUser = async (data) => {
     try {
-        const { user_id, email, password, full_name, avatar_url, role_id } = data;
+        const { user_id, email, password, full_name, phone, avatar_url, role_id } = data;
         if (!user_id || isNaN(user_id)) {
             return {
                 errCode: 1,
@@ -320,7 +339,17 @@ export const updateUser = async (data) => {
             };
         }
 
-        const updateData = { email, full_name, avatar_url, role_id };
+        if (phone && phone !== user.phone) {
+            const phoneExists = await checkPhone(phone);
+            if (phoneExists) {
+                return {
+                    errCode: 3,
+                    errMessage: 'Phone number already exists',
+                };
+            }
+        }
+
+        const updateData = { email, full_name, phone, avatar_url, role_id };
         if (password) {
             const hashedPassword = await hashUserPassword(password);
             if (hashedPassword.errCode) return hashedPassword;
