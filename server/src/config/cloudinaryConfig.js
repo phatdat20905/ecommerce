@@ -18,11 +18,11 @@ const fileFilter = (req, file, cb) => {
     cb(null, true);
 };
 
-// Cấu hình lưu trữ Cloudinary cho multer
-const storage = new CloudinaryStorage({
+// Cấu hình lưu trữ Cloudinary cho avatar
+const avatarStorage = new CloudinaryStorage({
     cloudinary,
     params: {
-        folder: 'ecommerce_avatars', // Thư mục lưu ảnh trên Cloudinary
+        folder: 'ecommerce_avatars', // Thư mục lưu ảnh avatar trên Cloudinary
         allowed_formats: ['jpg', 'png', 'jpeg'],
         public_id: (req, file) => `${req.user.user_id}_${Date.now()}`, // Tên file: user_id_timestamp
         transformation: [
@@ -31,10 +31,67 @@ const storage = new CloudinaryStorage({
     },
 });
 
-// Khởi tạo multer với Cloudinary storage
-export const upload = multer({
-    storage,
+// Cấu hình lưu trữ Cloudinary cho Brand
+const brandStorage = new CloudinaryStorage({
+    cloudinary,
+    params: {
+        folder: 'ecommerce_brands',
+        allowed_formats: ['jpg', 'png', 'jpeg'],
+        public_id: (req, file) => `brand_${Date.now()}`,
+        transformation: [
+            { width: 200, height: 200, crop: 'fill', quality: 'auto' },
+        ],
+    },
+});
+
+// Cấu hình lưu trữ Cloudinary cho Category
+const categoryStorage = new CloudinaryStorage({
+    cloudinary,
+    params: {
+        folder: 'ecommerce_categories',
+        allowed_formats: ['jpg', 'png', 'jpeg'],
+        public_id: (req, file) => `category_${Date.now()}`,
+        transformation: [
+            { width: 200, height: 200, crop: 'fill', quality: 'auto' },
+        ],
+    },
+});
+
+// Cấu hình lưu trữ Cloudinary cho ảnh trong description
+const descriptionStorage = new CloudinaryStorage({
+    cloudinary,
+    params: {
+        folder: 'description_images',
+        allowed_formats: ['jpg', 'png', 'jpeg'],
+        public_id: (req, file) => `desc_${Date.now()}`,
+        transformation: [
+            { quality: 'auto' },
+        ],
+    },
+});
+
+// Khởi tạo multer với Cloudinary storage cho từng loại
+export const uploadAvatar = multer({
+    storage: avatarStorage,
     limits: { fileSize: 5 * 1024 * 1024 }, // Giới hạn 5MB
+    fileFilter,
+});
+
+export const uploadBrandImage = multer({
+    storage: brandStorage,
+    limits: { fileSize: 5 * 1024 * 1024 }, // Giới hạn 5MB
+    fileFilter,
+});
+
+export const uploadCategoryImage = multer({
+    storage: categoryStorage,
+    limits: { fileSize: 5 * 1024 * 1024 }, // Giới hạn 5MB
+    fileFilter,
+});
+
+export const uploadDescriptionImage = multer({
+    storage: descriptionStorage,
+    limits: { fileSize: 5 * 1024 * 1024 },
     fileFilter,
 });
 
@@ -58,4 +115,14 @@ export const deleteFromCloudinary = async (publicId) => {
             errMessage: `Error deleting image: ${error.message}`,
         };
     }
+};
+
+// Hàm lấy public_id từ URL ảnh
+export const getPublicIdFromUrl = (url) => {
+    if (!url) return null;
+    const parts = url.split('/');
+    const fileName = parts[parts.length - 1];
+    const publicId = fileName.split('.')[0];
+    const folder = parts[parts.length - 2];
+    return `${folder}/${publicId}`;
 };

@@ -1,5 +1,5 @@
 import db from '../models/index.js';
-import { deleteFromCloudinary } from '../config/cloudinaryConfig.js';
+import { deleteFromCloudinary, getPublicIdFromUrl } from '../config/cloudinaryConfig.js';
 
 // Hàm kiểm tra tên category
 const checkCategoryName = async (name) => {
@@ -39,7 +39,7 @@ export const createCategory = async (categoryData) => {
 
         const category = await db.Category.create({
             name,
-            parent_id,
+            parent_id: parent_id || null,
             image_url,
         });
 
@@ -94,17 +94,10 @@ export const updateCategory = async (category_id, data) => {
                     errMessage: 'Parent category not found',
                 };
             }
-            // Kiểm tra không cho phép category làm parent của chính nó
-            if (parent_id === category_id) {
-                return {
-                    errCode: 5,
-                    errMessage: 'Category cannot be its own parent',
-                };
-            }
         }
 
         await db.Category.update(
-            { name, parent_id, image_url },
+            { name, parent_id: parent_id || null, image_url },
             { where: { category_id } }
         );
 
@@ -141,22 +134,24 @@ export const deleteCategory = async (category_id) => {
             };
         }
 
+        // Cập nhật parent_id của các subcategory liên quan thành null
+        await db.Category.update(
+            { parent_id: null },
+            { where: { parent_id: category_id } }
+        );
+
         // Cập nhật category_id của các sản phẩm liên quan thành null
         await db.Product.update(
             { category_id: null },
             { where: { category_id } }
         );
 
-        // Cập nhật parent_id của các category con thành null
-        await db.Category.update(
-            { parent_id: null },
-            { where: { parent_id: category_id } }
-        );
-
         // Xóa hình ảnh trên Cloudinary nếu có
         if (category.image_url) {
-            const publicId = category.image_url.split('/').pop().split('.')[0];
-            await deleteFromCloudinary(`ecommerce_categories/${publicId}`);
+            const publicId = getPublicIdFromUrl(category.image_url);
+            if (publicId) {
+                await deleteFromCloudinary(publicId);
+            }
         }
 
         await db.Category.destroy({ where: { category_id } });
@@ -184,11 +179,7 @@ export const getCategoryById = async (category_id) => {
             };
         }
 
-        const category = await db.Category.findOne({
-            where: { category_id },
-            include: [{ model: db.Category, as: 'parent', attributes: ['category_id', 'name'] }],
-        });
-
+        const category = await db.Category.findOne({ where: { category_id } });
         if (!category) {
             return {
                 errCode: 2,
@@ -212,10 +203,7 @@ export const getCategoryById = async (category_id) => {
 // Hàm lấy tất cả category
 export const getAllCategories = async () => {
     try {
-        const categories = await db.Category.findAll({
-            include: [{ model: db.Category, as: 'parent', attributes: ['category_id', 'name'] }],
-        });
-
+        const categories = await db.Category.findAll();
         return {
             errCode: 0,
             errMessage: 'Categories retrieved successfully',
@@ -232,6 +220,9 @@ export const getAllCategories = async () => {
 // Hàm upload hình ảnh category
 export const uploadCategoryImage = async (category_id, file) => {
     try {
+        console.log('category_id:', category_id);
+        console.log('file:', file);
+
         if (!category_id || isNaN(category_id)) {
             return {
                 errCode: 1,
@@ -239,10 +230,10 @@ export const uploadCategoryImage = async (category_id, file) => {
             };
         }
 
-        if (!file) {
+        if (!file || !file.path) {
             return {
                 errCode: 2,
-                errMessage: 'No file uploaded',
+                errMessage: 'No file uploaded or file path missing',
             };
         }
 
@@ -256,15 +247,19 @@ export const uploadCategoryImage = async (category_id, file) => {
 
         // Xóa hình ảnh cũ trên Cloudinary nếu có
         if (category.image_url) {
-            const publicId = category.image_url.split('/').pop().split('.')[0];
-            const deleteResult = await deleteFromCloudinary(`ecommerce_categories/${publicId}`);
-            if (deleteResult.errCode !== 0 && deleteResult.errCode !== 1) {
-                return deleteResult;
+            const publicId = getPublicIdFromUrl(category.image_url);
+            if (publicId) {
+                console.log('Deleting old image from Cloudinary:', publicId);
+                const deleteResult = await deleteFromCloudinary(publicId);
+                if (deleteResult.errCode !== 0 && deleteResult.errCode !== 1) {
+                    return deleteResult;
+                }
             }
         }
 
         // URL hình ảnh mới từ Cloudinary
         const image_url = file.path;
+        console.log('New image URL:', image_url);
 
         await db.Category.update({ image_url }, { where: { category_id } });
         const updatedCategory = await db.Category.findOne({ where: { category_id } });
@@ -275,6 +270,7 @@ export const uploadCategoryImage = async (category_id, file) => {
             data: updatedCategory,
         };
     } catch (error) {
+        console.error('Error in uploadCategoryImage:', error);
         return {
             errCode: -1,
             errMessage: `Error uploading category image: ${error.message}`,

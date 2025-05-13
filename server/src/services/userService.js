@@ -2,7 +2,7 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import db from '../models/index.js';
 import { sendEmail } from '../config/emailConfig.js';
-import { deleteFromCloudinary } from '../config/cloudinaryConfig.js';
+import { deleteFromCloudinary, getPublicIdFromUrl } from '../config/cloudinaryConfig.js';
 import admin from 'firebase-admin';
 
 const saltRounds = 10;
@@ -395,8 +395,10 @@ export const deleteUser = async (user_id) => {
 
         // Xóa ảnh đại diện trên Cloudinary nếu có
         if (user.avatar_url) {
-            const publicId = user.avatar_url.split('/').pop().split('.')[0];
-            await deleteFromCloudinary(`ecommerce_avatars/${publicId}`);
+            const publicId = getPublicIdFromUrl(user.avatar_url);
+            if (publicId) {
+                await deleteFromCloudinary(publicId);
+            }
         }
 
         await db.RefreshToken.destroy({ where: { user_id } });
@@ -666,11 +668,12 @@ export const uploadAvatar = async (user_id, file) => {
 
         // Xóa ảnh cũ trên Cloudinary nếu có
         if (user.avatar_url) {
-            const publicId = user.avatar_url.split('/').pop().split('.')[0];
-            const deleteResult = await deleteFromCloudinary(`ecommerce_avatars/${publicId}`);
-            if (deleteResult.errCode !== 0 && deleteResult.errCode !== 1) {
-                // Lỗi xóa ảnh nghiêm trọng (không phải ảnh không tồn tại)
-                return deleteResult;
+            const publicId = getPublicIdFromUrl(user.avatar_url);
+            if (publicId) {
+                const deleteResult = await deleteFromCloudinary(publicId);
+                if (deleteResult.errCode !== 0 && deleteResult.errCode !== 1) {
+                    return deleteResult;
+                }
             }
         }
 

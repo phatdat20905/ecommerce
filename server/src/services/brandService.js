@@ -1,5 +1,5 @@
 import db from '../models/index.js';
-import { deleteFromCloudinary } from '../config/cloudinaryConfig.js';
+import { deleteFromCloudinary, getPublicIdFromUrl } from '../config/cloudinaryConfig.js';
 
 // Hàm kiểm tra tên brand
 const checkBrandName = async (name) => {
@@ -122,8 +122,10 @@ export const deleteBrand = async (brand_id) => {
 
         // Xóa hình ảnh trên Cloudinary nếu có
         if (brand.image_url) {
-            const publicId = brand.image_url.split('/').pop().split('.')[0];
-            await deleteFromCloudinary(`ecommerce_brands/${publicId}`);
+            const publicId = getPublicIdFromUrl(brand.image_url);
+            if (publicId) {
+                await deleteFromCloudinary(publicId);
+            }
         }
 
         await db.Brand.destroy({ where: { brand_id } });
@@ -199,13 +201,6 @@ export const uploadBrandImage = async (brand_id, file) => {
             };
         }
 
-        if (!file) {
-            return {
-                errCode: 2,
-                errMessage: 'No file uploaded',
-            };
-        }
-
         const brand = await db.Brand.findOne({ where: { brand_id } });
         if (!brand) {
             return {
@@ -214,17 +209,22 @@ export const uploadBrandImage = async (brand_id, file) => {
             };
         }
 
-        // Xóa hình ảnh cũ trên Cloudinary nếu có
-        if (brand.image_url) {
-            const publicId = brand.image_url.split('/').pop().split('.')[0];
-            const deleteResult = await deleteFromCloudinary(`ecommerce_brands/${publicId}`);
-            if (deleteResult.errCode !== 0 && deleteResult.errCode !== 1) {
-                return deleteResult;
+        let image_url = null;
+        if (file) {
+            // Xóa hình ảnh cũ trên Cloudinary nếu có
+            if (brand.image_url) {
+                const publicId = getPublicIdFromUrl(brand.image_url);
+                if (publicId) {
+                    const deleteResult = await deleteFromCloudinary(publicId);
+                    if (deleteResult.errCode !== 0 && deleteResult.errCode !== 1) {
+                        return deleteResult;
+                    }
+                }
             }
-        }
 
-        // URL hình ảnh mới từ Cloudinary
-        const image_url = file.path;
+            // URL hình ảnh mới từ Cloudinary
+            image_url = file.path;
+        }
 
         await db.Brand.update({ image_url }, { where: { brand_id } });
         const updatedBrand = await db.Brand.findOne({ where: { brand_id } });

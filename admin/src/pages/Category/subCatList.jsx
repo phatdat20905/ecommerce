@@ -1,170 +1,133 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Button } from '@mui/material';
 import { MdExpandMore, MdEdit, MdDelete } from 'react-icons/md';
 import { MyContext } from '../../App';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchCategories, deleteCategory } from '../../store/slices/categorySlice';
+import { toast } from 'react-hot-toast';
 
-const CategoryList = () => {
+const SubCategoryList = () => {
     const context = useContext(MyContext);
-    // Dữ liệu phân cấp (category, sub-category, third-level category)
-    const [categories, setCategories] = useState([
-        {
-            name: 'Fashion',
-            subCategories: [
-                {
-                    name: 'Men',
-                    thirdLevelCategories: [
-                        { name: 'T-Shirts' },
-                        { name: 'Casual Shirts' },
-                        { name: 'Blazers & Coats' },
-                        { name: 'Jeans' },
-                    ],
-                },
-                {
-                    name: 'Women',
-                    thirdLevelCategories: [
-                        { name: 'Kurtas & Suits' },
-                        { name: 'Sarees' },
-                        { name: 'Tops' },
-                        { name: 'Jeans' },
-                    ],
-                },
-                {
-                    name: 'Girls',
-                    thirdLevelCategories: [
-                        { name: 'Tops' },
-                        { name: 'Kurta Sets' },
-                    ],
-                },
-            ],
-            expanded: false, // Trạng thái mở rộng của category
-        },
-        // Bạn có thể thêm các category khác nếu cần
-    ]);
+    const dispatch = useDispatch();
+    const { categories, loading, error } = useSelector((state) => state.category);
+
+    useEffect(() => {
+        dispatch(fetchCategories());
+    }, [dispatch]);
+
+    // Chuyển đổi dữ liệu thành dạng phân cấp
+    const organizedCategories = categories.reduce((acc, cat) => {
+        if (!cat.parent_id) {
+            acc.push({
+                ...cat,
+                subCategories: categories.filter((subCat) => subCat.parent_id === cat.category_id),
+                expanded: false,
+            });
+        }
+        return acc;
+    }, []);
 
     // Hàm xử lý mở rộng/thu gọn category
-    const toggleExpand = (index) => {
-        setCategories((prev) =>
-            prev.map((cat, i) =>
-                i === index ? { ...cat, expanded: !cat.expanded } : cat
-            )
-        );
-    };
-
-    // Hàm xử lý khi click nút Edit
-    const handleEdit = (category, subCategory, thirdLevelCategory) => {
-        console.log('Edit:', { category, subCategory, thirdLevelCategory });
-        // Thêm logic chỉnh sửa (ví dụ: mở form chỉnh sửa)
+    const toggleExpand = (categoryId) => {
+        context.setCategories(organizedCategories.map((cat) =>
+            cat.category_id === categoryId ? { ...cat, expanded: !cat.expanded } : cat
+        ));
     };
 
     // Hàm xử lý khi click nút Delete
-    const handleDelete = (category, subCategory, thirdLevelCategory) => {
-        console.log('Delete:', { category, subCategory, thirdLevelCategory });
-        // Thêm logic xóa (ví dụ: gọi API để xóa)
+    const handleDelete = (categoryId) => {
+        if (window.confirm('Are you sure you want to delete this category?')) {
+            dispatch(deleteCategory(categoryId)).then((result) => {
+                if (deleteCategory.fulfilled.match(result)) {
+                    toast.success('Category deleted successfully');
+                } else {
+                    toast.error(result.payload.errMessage || 'Failed to delete category');
+                }
+            });
+        }
     };
 
     return (
         <>
             <div className='flex items-center justify-between px-2 py-0 mt-1'>
-                <h2 className="text-[18px] font-[600]">Sub Category List <span className="font-[400] text-[14px]"></span></h2>
+                <h2 className="text-[18px] font-[600]">Sub Category List</h2>
                 <div className='col w-[75%] ml-auto flex items-center justify-end gap-3'>
-                    <Button className='btn-blue !text-white btn-sm'
+                    <Button
+                        className='btn-blue !text-white btn-sm'
                         onClick={() => context.setIsShowFullScreenPanel({
                             open: true,
                             model: 'Add New Sub Category'
                         })}
-                    >ADD NEW SUB CATEGORY</Button>
+                    >
+                        ADD NEW SUB CATEGORY
+                    </Button>
                 </div>
             </div>
             <div className="card my-4 pt-5 pb-5 px-5 shadow-md sm:rounded-lg bg-white">
+                {loading && <p>Loading...</p>}
+                {error && <p className="text-red-500">{error}</p>}
                 <ul className="w-full">
-                    {categories.map((category, catIndex) => (
-                        <li key={catIndex} className="w-full mb-1">
+                    {organizedCategories.map((category) => (
+                        <li key={category.category_id} className="w-full mb-1">
                             {/* Category */}
                             <div className="flex items-center w-full p-2 bg-[#f1f1f1] rounded-sm px-4">
                                 <span className="font-[500] flex items-center gap-4 text-[14px]">
                                     {category.name}
                                 </span>
-                                <Button
-                                    className="!min-w-[35px] !w-[35px] !h-[35px] !rounded-full !text-black !ml-auto"
-                                    onClick={() => toggleExpand(catIndex)}
-                                >
-                                    <MdExpandMore
-                                        className={`transition-transform duration-300 ${category.expanded ? 'rotate-180' : ''
-                                            }`}
-                                    />
-                                </Button>
+                                <div className="flex items-center ml-auto gap-2">
+                                    <Button
+                                        className="!min-w-[35px] !w-[35px] !h-[35px] !rounded-full !text-black"
+                                        onClick={() => context.setIsShowFullScreenPanel({
+                                            open: true,
+                                            model: 'Edit Category',
+                                            data: category,
+                                        })}
+                                    >
+                                        <MdEdit />
+                                    </Button>
+                                    <Button
+                                        className="!min-w-[35px] !w-[35px] !h-[35px] !rounded-full !text-black"
+                                        onClick={() => handleDelete(category.category_id)}
+                                    >
+                                        <MdDelete />
+                                    </Button>
+                                    <Button
+                                        className="!min-w-[35px] !w-[35px] !h-[35px] !rounded-full !text-black"
+                                        onClick={() => toggleExpand(category.category_id)}
+                                    >
+                                        <MdExpandMore
+                                            className={`transition-transform duration-300 ${category.expanded ? 'rotate-180' : ''}`}
+                                        />
+                                    </Button>
+                                </div>
                             </div>
 
                             {/* Sub Categories */}
                             {category.expanded && (
                                 <ul className="w-full">
-                                    {category.subCategories.map((subCat, subCatIndex) => (
-                                        <li key={subCatIndex} className="w-full py-1">
+                                    {category.subCategories.map((subCat) => (
+                                        <li key={subCat.category_id} className="w-full py-1">
                                             <div className="w-100 flex items-center gap-3 p-0 px-4">
                                                 <span className="font-[500] text-[14px]">{subCat.name}</span>
                                                 <div className="flex items-center ml-auto gap-2">
                                                     <Button
                                                         className="!min-w-[35px] !w-[35px] !h-[35px] !rounded-full !text-black"
-                                                        onClick={() =>
-                                                            handleEdit(category.name, subCat.name, null)
-                                                        }
+                                                        onClick={() => context.setIsShowFullScreenPanel({
+                                                            open: true,
+                                                            model: 'Edit Sub Category',
+                                                            data: subCat,
+                                                        })}
                                                     >
                                                         <MdEdit />
                                                     </Button>
                                                     <Button
                                                         className="!min-w-[35px] !w-[35px] !h-[35px] !rounded-full !text-black"
-                                                        onClick={() =>
-                                                            handleDelete(category.name, subCat.name, null)
-                                                        }
+                                                        onClick={() => handleDelete(subCat.category_id)}
                                                     >
                                                         <MdDelete />
                                                     </Button>
                                                 </div>
                                             </div>
-
-                                            {/* Third Level Categories */}
-                                            <ul className="pl-4">
-                                                {subCat.thirdLevelCategories.map(
-                                                    (thirdLevelCat, thirdLevelIndex) => (
-                                                        <li
-                                                            key={thirdLevelIndex}
-                                                            className="w-full hover:bg-[#f1f1f1]"
-                                                        >
-                                                            <div className="w-100 flex items-center gap-3 p-0 px-4">
-                                                                <span className="font-[500] text-[14px]">
-                                                                    {thirdLevelCat.name}
-                                                                </span>
-                                                                <div className="flex items-center ml-auto gap-2">
-                                                                    <Button
-                                                                        className="!min-w-[35px] !w-[35px] !h-[35px] !rounded-full !text-black"
-                                                                        onClick={() =>
-                                                                            handleEdit(
-                                                                                category.name,
-                                                                                subCat.name,
-                                                                                thirdLevelCat.name
-                                                                            )
-                                                                        }
-                                                                    >
-                                                                        <MdEdit />
-                                                                    </Button>
-                                                                    <Button
-                                                                        className="!min-w-[35px] !w-[35px] !h-[35px] !rounded-full !text-black"
-                                                                        onClick={() =>
-                                                                            handleDelete(
-                                                                                category.name,
-                                                                                subCat.name,
-                                                                                thirdLevelCat.name
-                                                                            )
-                                                                        }
-                                                                    >
-                                                                        <MdDelete />
-                                                                    </Button>
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                    )
-                                                )}
-                                            </ul>
                                         </li>
                                     ))}
                                 </ul>
@@ -177,4 +140,4 @@ const CategoryList = () => {
     );
 };
 
-export default CategoryList;
+export default SubCategoryList;

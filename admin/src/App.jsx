@@ -33,6 +33,9 @@ import ForgotPassword from './pages/ForgotPassword';
 import VerifyAccount from './pages/VerifyAccount';
 import ChangePassword from './pages/ChangePassword';
 import { Toaster } from 'react-hot-toast';
+import BrandList from './pages/Brand';
+import AddBrand from './pages/Brand/AddBrand';
+import EditCategory from './pages/Category/editCategory';
 
 const MyContext = createContext();
 
@@ -72,6 +75,7 @@ function App() {
         { path: "homeSlider/list", element: <HomeSliderBanners /> },
         { path: "category/list", element: <CategoryList /> },
         { path: "subCategory/list", element: <SubCategoryList /> },
+        { path: "brand/list", element: <BrandList /> },
         { path: "users", element: <Users /> },
         { path: "orders", element: <Orders /> },
       ]
@@ -188,6 +192,12 @@ function App() {
           }
           {
             isShowFullScreenPanel?.model === "Add New Sub Category" && <AddSubCategory />
+          }
+          {
+            isShowFullScreenPanel?.model === "Add New Brand" && <AddBrand />
+          }
+          {
+            isShowFullScreenPanel?.model === "Edit Category" && <EditCategory />
           }
         </Dialog>
       </MyContext.Provider>

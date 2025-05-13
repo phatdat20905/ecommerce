@@ -130,6 +130,40 @@ const SideBar = () => {
                     </li>
                     <li>
                         <Button className="w-full !capitalize !justify-start flex gap-3 text-[14px] !text-[rgba(0,0,0,0.8)] !font-[500] items-center !py-2 hover:!bg-[#f1f1f1]">
+                            <BiCategory className="text-[18px]" />
+                            <span>Brand</span>
+                            <span className="ml-auto w-[30px] h-[30px] flex items-center justify-center"
+                                onClick={() => isOpenSubMenu(2)}
+                            >
+                                <FaAngleDown className="transition-all " />
+                            </span>
+                        </Button>
+                        <Collapse isOpened={submenuIndex === 2 ? true : false}>
+                            <ul className="w-full">
+                                <li className="w-full">
+                                    <Link to={"/brand/list"}>
+                                        <Button className="!text-[rgba(0,0,0,0.7)] !capitalize !justify-start !w-full !text-[13px] !font-[500] !pl-9 flex gap-3">
+                                            <span className="block w-[5px] h-[5px] rounded-full bg-[rgba(0,0,0,0.2)]"></span>
+                                            Brand List
+                                        </Button>
+                                    </Link>
+                                </li>
+                                <li className="w-full">
+                                    <Button
+                                        onClick={() => context.setIsShowFullScreenPanel({
+                                            open: true,
+                                            model: 'Add New Brand'
+                                        })}
+                                        className="!text-[rgba(0,0,0,0.7)] !capitalize !justify-start !w-full !text-[13px] !font-[500] !pl-9 flex gap-3">
+                                        <span className="block w-[5px] h-[5px] rounded-full bg-[rgba(0,0,0,0.2)]"></span>
+                                        Add A Brand
+                                    </Button>
+                                </li>
+                            </ul>
+                        </Collapse>
+                    </li>
+                    <li>
+                        <Button className="w-full !capitalize !justify-start flex gap-3 text-[14px] !text-[rgba(0,0,0,0.8)] !font-[500] items-center !py-2 hover:!bg-[#f1f1f1]">
                             <RiProductHuntLine className="text-[18px]" />
                             <span>Products</span>
                             <span className="ml-auto w-[30px] h-[30px] flex items-center justify-center"
